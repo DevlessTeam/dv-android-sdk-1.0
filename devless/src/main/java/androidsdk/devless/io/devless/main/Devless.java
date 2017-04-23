@@ -1,9 +1,17 @@
 package androidsdk.devless.io.devless.main;
 
 import android.content.Context;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import androidsdk.devless.io.devless.services.APISERVICE;
 import androidsdk.devless.io.devless.services.DELETEAPISERVICE;
@@ -30,19 +38,19 @@ public class Devless {
         this.token = token;
     }
 
-    public void get(String tableName, final RequestResponse requestResponseresponse) {
+    public void getData(String tableName, final RequestResponse requestResponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APISERVICE service = retrofit.create(APISERVICE.class);
-        Call<ResponseBody> result = service.getCalls("db?table="+tableName, token);
+        final Call<ResponseBody> result = service.getCalls("db?table="+tableName, token);
 
         result.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    requestResponseresponse.OnSuccess(response.body().string());
+                     requestResponse.OnSuccess(response.body().string());
 
 
                 } catch (IOException e) {
@@ -52,13 +60,13 @@ public class Devless {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                requestResponseresponse.OnSuccess(t.toString());
+                requestResponse.OnSuccess(t.toString());
             }
         });
     }
 
 
-    public void post(String tableName,  Map<String, Object> dataToAdd, final RequestResponse requestResponseresponse) {
+    public void postData(String tableName,  Map<String, Object> dataToAdd, final RequestResponse requestResponseresponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -161,14 +169,29 @@ public class Devless {
     }
 
 
-    public void signUserUp(String userName, String email, String password, final RequestResponse requestResponseresponse) {
+    public void signUpUserWithEmailAndPassword(String email, String password, final RequestResponse requestResponse) {
+        List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
+                email, password, "", "", "", "", ""
+        ));
+
+        call("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                requestResponse.OnSuccess(response);
+            }
+
+        });
+
+    }
+
+    public void call(String serviceName, String actionName, List<String> params, final RequestResponse requestResponseresponse) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(rootUrl + "/api/v1/service/devless/")
+                .baseUrl(rootUrl + "/api/v1/service/"+ serviceName + "/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         POSTAPI postapi = retrofit.create(POSTAPI.class);
-        Call<ResponseBody> result = postapi.sendPosts("rpc?action=signUp",
-                token, DevlessBuilder.signUp(userName, email, password, "null", "null", "null"));
+        Call<ResponseBody> result = postapi.sendPosts("rpc?action="+ actionName,
+                token, DevlessBuilder.callBodyBuilder(serviceName, params));
 
         result.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -188,9 +211,59 @@ public class Devless {
         });
     }
 
+
+    public void loginUserWithEmailAndPassword(String email, final String password, final LoginResponse loginResponse){
+        List<String> loginParams  = new ArrayList<>(Arrays.asList(
+                "",
+                 email,
+                "",
+                password
+        ));
+        call("devless", "login", loginParams, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+
+                try {
+                    JSONObject jO = new JSONObject(response);
+                    String payload = jO.getString("payload");
+                    JSONObject payloadObject = new JSONObject(payload);
+                    String result = payloadObject.getString("result");
+                    if (result == "false"){
+                        //Wrong Email or Password
+                        loginResponse.OnLogInFailed("Wrong Email or Password");
+
+                    } else {
+                        //Login Success
+                        loginResponse.OnLogInSuccess(result);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
+
+
+
     public interface RequestResponse {
         void OnSuccess(String response);
+
     }
+
+    public interface LoginResponse {
+        void OnLogInSuccess(String payload);
+        void OnLogInFailed(String error);
+    }
+
+
+    public interface SignUpResponse{
+        void OnSignUpSuccess (String payload);
+        void OnSignUpFailed  (String error);
+    }
+
+
 
 }
 

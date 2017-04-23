@@ -4,11 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import androidsdk.devless.io.devless.main.Devless;
 
 
@@ -24,22 +22,21 @@ public class MainActivity extends AppCompatActivity {
         String devlessToken = "5c820eeb7b60679ad14bf2aa57aa2b95";
         String tableName = "grocery_table";
 
-        Map<String, Object> field = new HashMap<>();
-        field.put("name", "Abigail");
+//        Map<String, Object> field = new HashMap<>();
+//        field.put("name", "Abigail");
 
         Devless devless = new Devless(this, appUrl, serviceName, devlessToken);
 
-        devless.get(tableName, new Devless.RequestResponse() {
-           @Override
-           public void OnSuccess(String response) {
 
-               Log.wtf("--------Get------ " , response);
-           }
-
-        });
+//        devless.getData(tableName, new Devless.RequestResponse() {
+//            @Override
+//            public void OnSuccess(String response) {
+//                Log.v("-----Success-----", response);
+//            }
+//
+//        });
 
         /*
-
         devless.post(tableName, field, new Devless.RequestResponse() {
             @Override
             public void OnSuccess(String response) {
@@ -79,28 +76,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         */
 
 
 
+//        devless.signUpUserWithEmailAndPassword("kkkaaaakk@gmail.com", "ssdadas", new Devless.RequestResponse() {
+//                    @Override
+//                    public void OnSuccess(String response) {
+//                        Log.v("signUP", response);
+//                    }
+//                });
 
 
-        String email =    "micnkru@gmail2.com";
-        String password =  "password";
-        String userName  =  "jeff4";
+//        devless.call("devless", "signUp", params, new Devless.RequestResponse() {
+//            @Override
+//            public void OnSuccess(String response) {
+//                Log.v("signUP", response);
+//            }
+//        });
 
 
-        devless.signUserUp(userName, email, password, new Devless.RequestResponse() {
-            @Override
-            public void OnSuccess(String response) {
-                Log.wtf("-------signupjson--------",  response);
-            }
-        });
-
-
-
-
+//        devless.loginUserWithEmailAndPassword("micnkru@gail.com", "password", new Devless.LoginResponse() {
+//            @Override
+//            public void OnLogInSuccess(String payload) {
+//                Log.v("-----Payload-----", payload);
+//            }
+//
+//            @Override
+//            public void OnLogInFailed(String error) {
+//                Log.v("-----Error-----", error);
+//            }
+//        });
 
 
     }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class DevlessBuilder {
@@ -78,7 +79,13 @@ public class DevlessBuilder {
         return map;
     }
 
-    public static Map<String, Object> signUp (String userName, String email, String password, String phoneNumber, String firstName, String lastName) {
+    public static Map<String, Object> signUpBuilder (String userName,
+                                              String email,
+                                              String password,
+                                              String phoneNumber,
+                                              String firstName,
+                                              String lastName)
+    {
 
         Map<String, Object> signUp = new HashMap<>();
         List<String> params = new ArrayList<>(Arrays.asList(
@@ -95,6 +102,17 @@ public class DevlessBuilder {
         signUp.put("method", "devless");
         signUp.put("id", "1000");
 
+        return  signUp;
+
+    }
+
+    public static Map<String, Object> callBodyBuilder (String serviceName, List<String> params) {
+
+        Map<String, Object> signUp = new HashMap<>();
+        signUp.put("params", params);
+        signUp.put("jsonrpc", "2.0");
+        signUp.put("method", serviceName);
+        signUp.put("id", "1000");
         return  signUp;
 
     }
