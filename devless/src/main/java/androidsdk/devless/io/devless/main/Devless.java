@@ -169,9 +169,24 @@ public class Devless {
     }
 
 
-    public void signUpUserWithEmailAndPassword(String email, String password, final RequestResponse requestResponse) {
+    public void signUpWithEmailAndPassword(String email, String password, final RequestResponse requestResponse) {
         List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
                 email, password, "", "", "", "", ""
+        ));
+
+        call("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                requestResponse.OnSuccess(response);
+            }
+
+        });
+
+    }
+
+    public void signUpWithUserNameAndPassword(String userName, String password, final RequestResponse requestResponse) {
+        List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
+                "", password, userName, "", "", "", ""
         ));
 
         call("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
@@ -228,7 +243,7 @@ public class Devless {
                     String payload = jO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
                     String result = payloadObject.getString("result");
-                    if (result == "false"){
+                    if (result.equalsIgnoreCase("false")){
                         //Wrong Email or Password
                         loginResponse.OnLogInFailed("Wrong Email or Password");
 
@@ -245,6 +260,38 @@ public class Devless {
 
     }
 
+    public void loginUserWithUserNameAndPassword(String userName, final String password, final LoginResponse loginResponse){
+        List<String> loginParams  = new ArrayList<>(Arrays.asList(
+                userName,
+                "",
+                "",
+                password
+        ));
+        call("devless", "login", loginParams, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+
+                try {
+                    JSONObject jO = new JSONObject(response);
+                    String payload = jO.getString("payload");
+                    JSONObject payloadObject = new JSONObject(payload);
+                    String result = payloadObject.getString("result");
+                    if (result.equalsIgnoreCase("false")){
+                        //Wrong Email or Password
+                        loginResponse.OnLogInFailed("Wrong UserName or Password");
+
+                    } else {
+                        //Login Success
+                        loginResponse.OnLogInSuccess(result);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
 
 
     public interface RequestResponse {
