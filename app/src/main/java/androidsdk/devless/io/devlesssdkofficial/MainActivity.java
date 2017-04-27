@@ -16,11 +16,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//
+//        String appUrl = "http://newerapper.herokuapp.com";
+//        String serviceName = "Grocery";
+//        String devlessToken = "5c820eeb7b60679ad14bf2aa57aa2b95";
+//        String tableName = "grocery_table";
 
-        String appUrl = "http://newerapper.herokuapp.com";
-        String serviceName = "Grocery";
-        String devlessToken = "5c820eeb7b60679ad14bf2aa57aa2b95";
-        String tableName = "grocery_table";
+        String appUrl = "http://afterpush.herokuapp.com";
+        String serviceName = "new_service";
+        String devlessToken = "f9372bad91503a3d4da8824ef6e9ebe6";
+        String tableName = "names";
 
 //        Map<String, Object> field = new HashMap<>();
 //        field.put("name", "Abigail");
@@ -96,17 +101,56 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-//        devless.loginUserWithEmailAndPassword("micnkru@gail.com", "password", new Devless.LoginResponse() {
-//            @Override
-//            public void OnLogInSuccess(String payload) {
-//                Log.v("-----Payload-----", payload);
-//            }
-//
-//            @Override
-//            public void OnLogInFailed(String error) {
-//                Log.v("-----Error-----", error);
-//            }
-//        });
+        /*
+        devless.loginUserWithEmailAndPassword("micnkru@gmail.com", "password", new Devless.LoginResponse() {
+            @Override
+            public void OnLogInSuccess(String s) {
+                Log.v("-----Payload-----", s);
+            }
+
+            @Override
+            public void OnLogInFailed(String s) {
+                Log.v("-----Error-----", s);
+            }
+        });
+
+
+        devless.loginUserWithUserNameAndPassword("jeff", "password", new Devless.LoginResponse() {
+            @Override
+            public void OnLogInSuccess(String payload) {
+                Log.v("-----PayloadUser-----", payload);
+            }
+
+            @Override
+            public void OnLogInFailed(String error) {
+                Log.v("-----ErrorUser-----", error);
+            }
+        });
+
+
+
+        devless.signUpWithUserNameAndPassword("Charles Finne", "password", new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Response==Signup", response);
+            }
+        });
+
+
+
+        devless.loginUserWithUserNameAndPassword("Charles Finne", "password", new Devless.LoginResponse() {
+            @Override
+            public void OnLogInSuccess(String payload) {
+                Log.v("-----PayloadUser-----", payload);
+            }
+
+            @Override
+            public void OnLogInFailed(String error) {
+                Log.v("-----ErrorUser-----", error);
+            }
+        });
+        */
+
 
 
     }
