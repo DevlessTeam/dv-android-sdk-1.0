@@ -7,6 +7,11 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import androidsdk.devless.io.devless.main.Devless;
 
 
@@ -16,33 +21,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//
-//        String appUrl = "http://newerapper.herokuapp.com";
-//        String serviceName = "Grocery";
-//        String devlessToken = "5c820eeb7b60679ad14bf2aa57aa2b95";
-//        String tableName = "grocery_table";
 
+        /*
         String appUrl = "http://afterpush.herokuapp.com";
         String serviceName = "new_service";
         String devlessToken = "f9372bad91503a3d4da8824ef6e9ebe6";
         String tableName = "names";
 
-//        Map<String, Object> field = new HashMap<>();
-//        field.put("name", "Abigail");
+        Map<String, Object> field = new HashMap<>();
+        field.put("name", "Abigail");
 
         Devless devless = new Devless(this, appUrl, serviceName, devlessToken);
 
 
-//        devless.getData(tableName, new Devless.RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.v("-----Success-----", response);
-//            }
-//
-//        });
+        devless.getData(tableName, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.v("-----Success-----", response);
+            }
 
-        /*
-        devless.post(tableName, field, new Devless.RequestResponse() {
+        });
+
+
+        devless.postData(tableName, field, new Devless.RequestResponse() {
             @Override
             public void OnSuccess(String response) {
                 Log.wtf("-------Post------ " , response);
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        devless.get(tableName, new Devless.RequestResponse() {
+        devless.getData(tableName, new Devless.RequestResponse() {
             @Override
             public void OnSuccess(String response) {
                 Log.wtf("--------Get After Delete------ " , response);
@@ -81,27 +82,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        */
+
+        List<String> params = new ArrayList<>();
+
+        devless.call("devless", "signUp", params, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.v("signUP", response);
+            }
+        });
 
 
 
-//        devless.signUpUserWithEmailAndPassword("kkkaaaakk@gmail.com", "ssdadas", new Devless.RequestResponse() {
-//                    @Override
-//                    public void OnSuccess(String response) {
-//                        Log.v("signUP", response);
-//                    }
-//                });
-
-
-//        devless.call("devless", "signUp", params, new Devless.RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.v("signUP", response);
-//            }
-//        });
-
-
-        /*
         devless.loginUserWithEmailAndPassword("micnkru@gmail.com", "password", new Devless.LoginResponse() {
             @Override
             public void OnLogInSuccess(String s) {
@@ -136,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        */
+
 
 
         devless.loginUserWithUserNameAndPassword("Charles Finne", "password", new Devless.LoginResponse() {
@@ -150,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("-----ErrorUser-----", error);
             }
         });
+        */
 
-        //*/
 
 
     }
