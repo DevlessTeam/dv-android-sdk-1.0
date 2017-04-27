@@ -51,9 +51,9 @@ Get your **app url**, **the service name**, **devless token** and **table name**
 
 ```
 
-#### We will be using our instance we created to query post, edit, delete and sign users up and even log in. lets start with querying dta from a particular table.
+#### We will be using our instance we created to **query** **post**, **edit**, **delete** and **sign users up** and even **log in**. lets start with querying data from a particular table.
 
-### Querying Data From your database in any of your services
+## Querying Data From your database in any of your services
 
 ```Java
 
@@ -70,21 +70,45 @@ devless.getData(tableName, new Devless.RequestResponse() {
  //watch this example below      
 */  
 
-String tableName = "names"   
+String tableName = "names";   
 
 devless.getData(tableName, new Devless.RequestResponse(){
-  @Override
-  public void OnSuccess(String response){
-    //Do what you want with the data here
-    //lets toast it
-    Toast.makeText(NameOfYourActivity.this, response, Toast.LENGHT_LONG).show();
+            @Override
+            public void OnSuccess(String response){
+                //Do what you want with the data here
+                //lets toast it
+                Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
 
-    //lest log the response
-    Log.v("-----Get Response-----", response);
+                //lest log the response
+                Log.v("-----Get Response-----", response);
 
-    //Do whatever you want with the data
-  }
-})
+                //Do whatever you want with the data
+            }
+        });
 ```
 
-### Adding Data To Your Backend
+## Adding Data To Your Backend
+
+#### Create a Map<String, Object> with the key being your field and the value being what you want to put in that field. So If we want to post this data  ***{"name" : "Abigail", "email" : "obengabigail@gmail.com"}*** to our names table because our table has two fields ie ***name*** and ***email***.
+
+```Java
+    //Create the HashMap of the fields the value you wanna post
+    Map<String, Object> dataToPost = new HashMap<>();
+    dataToPost.put("name", "Abigail");
+    dataToPost.put("email", "obengabigail@gmail.com");
+
+    //call the postData method on the devless instance you created earlier and specify the table name
+    devless.postData(tableName, dataToPost, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+              //Do what you want with the data here
+              //lets toast it
+              Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
+
+              //lest log the response
+              Log.v("-----Get Response-----", response);
+
+              //Do whatever you want with the data
+            }
+        });
+```

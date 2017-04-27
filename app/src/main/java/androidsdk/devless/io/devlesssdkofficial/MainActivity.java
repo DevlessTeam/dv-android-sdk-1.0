@@ -3,6 +3,7 @@ package androidsdk.devless.io.devlesssdkofficial;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -143,6 +144,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
+
+        String appUrl = "http://afterpush.herokuapp.com";  // remember no backslach after the com
+        String serviceName = "new_service"; //this is the name of my service;
+        String devlessToken = "f9372bad91503a3d4da8824ef6e9ebe6"; //this is my token
+
+        Devless devless = new Devless(this, appUrl, serviceName, devlessToken);
+
+        String tableName = "names";
+
+        Map<String, Object> field = new HashMap<>();
+        field.put("name", "Abigail");
+        field.put("email", "obengabigail@gmail.com");
+
+        devless.getData(tableName, new Devless.RequestResponse(){
+            @Override
+            public void OnSuccess(String response){
+                //Do what you want with the data here
+                //lets toast it
+                Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
+
+                //lest log the response
+                Log.v("-----Get Response-----", response);
+
+                //Do whatever you want with the data
+            }
+        });
+
+
+        devless.postData(tableName, field, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+
+            }
+        });
 
 
 
