@@ -9,7 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/devless" />
+            <option value="$PROJECT_DIR$/dv-android-sdk-1.0" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

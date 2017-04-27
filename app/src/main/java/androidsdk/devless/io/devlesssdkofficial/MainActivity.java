@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        */
 
 
         devless.loginUserWithUserNameAndPassword("Charles Finne", "password", new Devless.LoginResponse() {
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        */
+        //*/
 
 
     }

@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DevlessSDKOfficial.iml" filepath="$PROJECT_DIR$/DevlessSDKOfficial.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/devless/devless.iml" filepath="$PROJECT_DIR$/devless/devless.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dv-android-sdk-1.0/dv-android-sdk-1.0.iml" filepath="$PROJECT_DIR$/dv-android-sdk-1.0/dv-android-sdk-1.0.iml" />
     </modules>
   </component>
 </project>
