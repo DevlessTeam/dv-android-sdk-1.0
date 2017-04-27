@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         devless.loginUserWithUserNameAndPassword("Charles Finne", "password", new Devless.LoginResponse() {
             @Override
             public void OnLogInSuccess(String payload) {
@@ -149,8 +150,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("-----ErrorUser-----", error);
             }
         });
-        */
 
+        */
 
 
     }
