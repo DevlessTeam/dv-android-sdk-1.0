@@ -6,9 +6,9 @@ Download the the 'dv-android-sdk-1.0.aar' file [here](https://raw.github.com/cha
 
 
 #### Step two
-Open your project that already exists or create a new project in android studio and click on *file* a drop down will aapear and just hover on *new* move to the the drop down on the right and select *New Module...*
+Open your project that already exists or create a new project in android studio and click on ***file*** a drop down will aapear and just hover on ***new*** move to the the drop down on the right and select ***New Module...***
 
-You will be taken to a wizard page select the option that says *Import .JAR/.AAR Package*  and click on next
+You will be taken to a wizard page select the option that says ***Import .JAR/.AAR Package***  and click on next
 
 It will bring you to  a place where you have two input fields select the icon on the far right of the first input filed and navigate to where you saved the 'dv-android-sdk-1.0.aar' you downloaded earlier and select it and click next. Wait for it to sync and build and complete
 
@@ -29,10 +29,7 @@ You are done with the SETUP!!!! Yey! given you have done the above so lets go st
 ### Usage
 
 #### Get these four things before starting.
-Get **app url**
-Get **the service name**
-Get **your devless token**
-Get your **table name**
+Get your **app url**, **the service name**, **devless token** and **table name**
 
 #### Create a devless instance and like this
 ```Java
