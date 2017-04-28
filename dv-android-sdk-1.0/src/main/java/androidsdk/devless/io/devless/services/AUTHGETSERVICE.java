@@ -6,8 +6,11 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Url;
 
+/**
+ * Created by pianoafrik on 4/28/17.
+ */
 
-public interface APISERVICE {
+public interface AUTHGETSERVICE {
     @GET
     Call<ResponseBody> getCalls(@Url String url, @Header("devless-token") String auth, @Header("devless-user-token") String devlessUserToken);
 }

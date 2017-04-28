@@ -1,7 +1,6 @@
 package androidsdk.devless.io.devless.main;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import androidsdk.devless.io.devless.services.APISERVICE;
 import androidsdk.devless.io.devless.services.DELETEAPISERVICE;
@@ -29,7 +27,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Devless {
 
     Context mContext;
-    private String rootUrl, serviceName, token;
+    private String rootUrl, serviceName, token, devlessUserToken="";
+
+    public Devless(Context mContext, String rootUrl, String serviceName, String token, String devlessUserToken) {
+        this.mContext = mContext;
+        this.rootUrl = rootUrl;
+        this.serviceName = serviceName;
+        this.token = token;
+        this.devlessUserToken = devlessUserToken;
+    }
 
     public Devless(Context mContext, String rootUrl, String serviceName, String token) {
         this.mContext = mContext;
@@ -44,7 +50,7 @@ public class Devless {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APISERVICE service = retrofit.create(APISERVICE.class);
-        final Call<ResponseBody> result = service.getCalls("db?table="+tableName, token);
+        final Call<ResponseBody> result = service.getCalls("db?table="+tableName, token, devlessUserToken);
 
         result.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -65,7 +71,6 @@ public class Devless {
         });
     }
 
-
     public void postData(String tableName,  Map<String, Object> dataToAdd, final RequestResponse requestResponseresponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
@@ -73,7 +78,7 @@ public class Devless {
                 .build();
         POSTAPI postapi = retrofit.create(POSTAPI.class);
         Call<ResponseBody> result = postapi.sendPosts("db?table="+tableName,
-                token, DevlessBuilder.createPostBody(tableName, dataToAdd));
+                token, devlessUserToken ,DevlessBuilder.createPostBody(tableName, dataToAdd));
 
         result.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -99,7 +104,7 @@ public class Devless {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         PATCHAPISERVICE deleteapiservice = retrofit.create(PATCHAPISERVICE.class);
-        Call<ResponseBody> result = deleteapiservice.sendPosts("db?table=" + tableName, token, DevlessBuilder.createPatchBody(tableName, update, id));
+        Call<ResponseBody> result = deleteapiservice.sendPosts("db?table=" + tableName, token, devlessUserToken ,DevlessBuilder.createPatchBody(tableName, update, id));
 
         result.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -125,7 +130,7 @@ public class Devless {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         DELETEAPISERVICE deleteapiservice = retrofit.create(DELETEAPISERVICE.class);
-        Call<ResponseBody> result = deleteapiservice.sendPosts("db?table=" + tableName, token, DevlessBuilder.createDeleteBody(tableName, id));
+        Call<ResponseBody> result = deleteapiservice.sendPosts("db?table=" + tableName, token, devlessUserToken,DevlessBuilder.createDeleteBody(tableName, id));
 
         result.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -150,7 +155,7 @@ public class Devless {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         DELETEAPISERVICE deleteapiservice = retrofit.create(DELETEAPISERVICE.class);
-        Call<ResponseBody> result = deleteapiservice.sendPosts("db?table=" + tableName, token, DevlessBuilder.createDeleteAllBody(tableName));
+        Call<ResponseBody> result = deleteapiservice.sendPosts("db?table=" + tableName, token, devlessUserToken ,DevlessBuilder.createDeleteAllBody(tableName));
 
         result.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -206,7 +211,7 @@ public class Devless {
                 .build();
         POSTAPI postapi = retrofit.create(POSTAPI.class);
         Call<ResponseBody> result = postapi.sendPosts("rpc?action="+ actionName,
-                token, DevlessBuilder.callBodyBuilder(serviceName, params));
+                token,devlessUserToken, DevlessBuilder.callBodyBuilder(serviceName, params));
 
         result.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -237,7 +242,6 @@ public class Devless {
         call("devless", "login", loginParams, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
-
                 try {
                     JSONObject jO = new JSONObject(response);
                     String payload = jO.getString("payload");
@@ -245,6 +249,7 @@ public class Devless {
                     String result = payloadObject.getString("result");
                     JSONObject payloadReturnedObject = new JSONObject(result);
                     String token = payloadReturnedObject.getString("token");
+                    setDevlessUserToken(token);
                     if (result.equalsIgnoreCase("false")){
                         //Wrong Email or Password
                         loginResponse.OnLogInFailed("Wrong Email or Password");
@@ -314,7 +319,20 @@ public class Devless {
         void OnSignUpFailed  (String error);
     }
 
+    public String getServiceName() {
+        return serviceName;
+    }
 
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
 
+    public String getDevlessUserToken() {
+        return devlessUserToken;
+    }
+
+    public void setDevlessUserToken(String devlessUserToken) {
+        this.devlessUserToken = devlessUserToken;
+    }
 }
 

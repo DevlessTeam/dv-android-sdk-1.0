@@ -14,6 +14,6 @@ import retrofit2.http.Url;
 public interface DELETEAPISERVICE {
     @Headers({"X-HTTP-Method-Override: DELETE"})
     @POST
-    Call<ResponseBody> sendPosts(@Url String url, @Header("devless-token") String token, @Body Map<String, Object> field);
+    Call<ResponseBody> sendPosts(@Url String url, @Header("devless-token") String token, @Header("devless-user-token") String devlessUserToken, @Body Map<String, Object> field);
 }
 

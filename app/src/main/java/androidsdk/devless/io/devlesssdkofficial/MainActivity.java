@@ -146,32 +146,11 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
-        String appUrl = "http://afterpush.herokuapp.com";
-        String serviceName = "new_service";
-        String devlessToken = "f9372bad91503a3d4da8824ef6e9ebe6";
-        String tableName = "names";
-        Devless devless = new Devless(this, appUrl, serviceName, devlessToken);
 
-       devless.loginWithEmailAndPassword("micnkru@gmail2.com", "password", new Devless.LoginResponse() {
-           @Override
-           public void OnLogInSuccess(String payload, String userToken) {
-               Log.e("-----UserPayload-----", payload);
-               Log.e("-----UserToken-----", userToken);
-           }
 
-           @Override
-           public void OnLogInFailed(String error) {
-               Log.e("-----ErrorUser-----", error);
-           }
-       });
 
-//        devless.signUpWithEmailAndPassword("micnkru@gmail2.com", "password", new Devless.RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("-----User-----", response);
-//            }
-//        });
     }
+
 
 
 }
