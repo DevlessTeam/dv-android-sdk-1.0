@@ -114,7 +114,6 @@ devless.getData(tableName, new Devless.RequestResponse(){
             }
         });
 ```
-<<<<<<< HEAD
 
 ## Editing/Patching data in your backend
 #### Create a Map<String, Object> with the key being your field and the value being what you want to change in your backend. So If we want to change the name field of what we already entered which was  ***{"name" : "Abigail", "email" : "obengabigail@gmail.com"}*** in our names table we will create a Map<String, Object> and set he new fields. This is how you will do it.
