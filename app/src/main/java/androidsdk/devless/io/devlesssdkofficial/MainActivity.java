@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         SharedPreferences sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+
 
         String appUrl = "http://afterpush.herokuapp.com";
         String serviceName = "new_service";
@@ -39,51 +41,102 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> params = new HashMap<>();
         params.put("name", "neweresr13");
 
-        Devless devless = new Devless(this, appUrl, serviceName, devlessToken);
+       Devless devless = new Devless(this, appUrl, devlessToken);
+
         devless.addUserToken(sp);
 
-//        devless.getData(serviceName, tableName, new Devless.RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("Query response", response);
-//            }
-//        });
-//
-//        devless.postData(serviceName, tableName, params, new Devless.RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("Messge", response);
-//            }
-//        });
-//
-//        devless.edit(serviceName, tableName, params, "13", new Devless.RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("Messge13", response);
-//            }
-//        });
+        devless.getData(serviceName, tableName, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Query response", response);
+            }
+        });
 
-//        devless.delete(serviceName, tableName, "13", new Devless.RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("Delete13", response);
-//            }
-//        });
+        devless.postData(serviceName, tableName, params, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Messge", response);
+            }
+        });
 
-//        devless.deleteAll(serviceName, tableName, new Devless.RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("deletall", response);
-//            }
-//        });
+        devless.edit(serviceName, tableName, params, "13", new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Messge13", response);
+            }
+        });
 
-//        devless.logout(new Devless.LogoutResponse() {
-//            @Override
-//            public void OnLogOutSuccess(String response) {
-//                Log.e("Log Out", response);
-//            }
-//        });
+        devless.delete(serviceName, tableName, "13", new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Delete13", response);
+            }
+        });
 
+        devless.deleteAll(serviceName, tableName, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("deletall", response);
+            }
+        });
+
+        devless.logout(new Devless.LogoutResponse() {
+            @Override
+            public void OnLogOutSuccess(String response) {
+                Log.e("Log Out", response);
+            }
+        });
+
+        devless.signUpWithEmailAndPassword("meko@gmail.com", "password", sp, new Devless.SignUpResponse() {
+            @Override
+            public void OnSignUpSuccess(String payload) {
+                //Toast your success message here
+                Log.e("SignUp success", payload);
+            }
+
+            @Override
+            public void OnSignUpFailed(String errorMessage) {
+                Log.e("SignuPFailure", errorMessage);
+            }
+        });
+
+        devless.signUpWithUsernameAndPassword("mikko", "password", sp, new Devless.SignUpResponse() {
+            @Override
+            public void OnSignUpSuccess(String payload) {
+                Log.e("UsernamePassSignUpSucc", payload);
+            }
+
+            @Override
+            public void OnSignUpFailed(String errorMessage) {
+                Log.e("UnamPassSignUpFailed", errorMessage);
+            }
+        });
+
+
+        devless.loginWithEmailAndPassword("meko@gmail.com", "password", sp, new Devless.LoginResponse() {
+            @Override
+            public void OnLogInSuccess(String payload) {
+                Log.e("UsernamePassLogInSucc", payload);
+            }
+
+            @Override
+            public void OnLogInFailed(String error) {
+                Log.e("UsernamePassLoginSucc", error);
+            }
+        });
+
+        devless.loginWithUsernameAndPassword("mikko", "password", sp, new Devless.LoginResponse() {
+            @Override
+            public void OnLogInSuccess(String payload) {
+                Log.e("UsernamePassLogInSucc", payload);
+            }
+
+            @Override
+            public void OnLogInFailed(String error) {
+                Log.e("UsernamePassLoginSucc", error);
+            }
+        });
+        */
 
 
 

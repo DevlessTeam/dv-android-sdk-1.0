@@ -173,7 +173,7 @@ public class Devless extends AppCompatActivity implements Serializable{
     }
 
 
-    public void signUpWithEmailAndPassword(String email, final String password, final SharedPreferences sp, final RequestResponse requestResponse) {
+    public void signUpWithEmailAndPassword(String email, final String password, final SharedPreferences sp, final SignUpResponse signUpResponse) {
         final SharedPreferences.Editor editor = sp.edit();
         List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
                 email, password, "", "", "", "", ""
@@ -189,12 +189,12 @@ public class Devless extends AppCompatActivity implements Serializable{
                     String result = payloadObject.getString("result");
                     JSONObject resultObject = new JSONObject(result);
                     if(resultObject.length() ==  2){
-                        requestResponse.OnSuccess(payload);
+                        signUpResponse.OnSignUpSuccess(payload);
                         String token  =  resultObject.getString("token");
                         editor.putString("devlessUserToken", token);
                         editor.commit();
                     } else if (resultObject.length() == 3) {
-                        requestResponse.OnSuccess("Seems Email already exists");
+                        signUpResponse.OnSignUpFailed("Seems Email already exists");
                     }
 
                 } catch (JSONException e) {
