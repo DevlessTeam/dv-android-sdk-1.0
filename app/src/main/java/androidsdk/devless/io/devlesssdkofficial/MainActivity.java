@@ -1,5 +1,8 @@
 package androidsdk.devless.io.devlesssdkofficial;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,10 +22,42 @@ import androidsdk.devless.io.devless.main.Devless;
 
 public class MainActivity extends AppCompatActivity {
 
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+    private final String  DEVLESS_USER_TOKEN = "devlessUserToken";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String appUrl = "http://afterpush.herokuapp.com";
+        String serviceName = "new_service";
+        String devlessToken = "f9372bad91503a3d4da8824ef6e9ebe6";
+        String tableName = "names";
+
+        Devless devless = new Devless(this, appUrl, serviceName, devlessToken);
+
+        sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        editor = sp.edit();
+
+        if (sp.contains(DEVLESS_USER_TOKEN )){
+            String userName = sp.getString(DEVLESS_USER_TOKEN, "Error");
+            //Log.e("DevlessUserToken", userName);
+            devless.setDevlessUserToken(userName);
+            //startActivity(new Intent(this, PinLogin.class));
+
+        }
+
+        Log.e("=-==DevlessUserToken==", devless.getDevlessUserToken());
+
+        devless.getData(tableName, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("==Query response==", response);
+            }
+        });
 
         /*
         String appUrl = "http://afterpush.herokuapp.com";
@@ -145,6 +180,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
+
+
+
+//        devless.loginWithEmailAndPassword("micnkru@gmail2.com", "password", new Devless.LoginResponse() {
+//            @Override
+//            public void OnLogInSuccess(String payload, String userToken) {
+//                Log.e("===userToken===", userToken);
+//                editor.putString(DEVLESS_USER_TOKEN, userToken);
+//                editor.commit();
+//            }
+//
+//            @Override
+//            public void OnLogInFailed(String error) {
+//
+//            }
+//        });
+
+
+
+
 
 
 

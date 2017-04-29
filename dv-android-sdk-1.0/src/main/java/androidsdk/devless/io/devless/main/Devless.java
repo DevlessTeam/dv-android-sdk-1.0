@@ -179,7 +179,7 @@ public class Devless {
                 email, password, "", "", "", "", ""
         ));
 
-        call("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
+        methodCall("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
                 requestResponse.OnSuccess(response);
@@ -194,7 +194,7 @@ public class Devless {
                 "", password, userName, "", "", "", ""
         ));
 
-        call("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
+        methodCall("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
                 requestResponse.OnSuccess(response);
@@ -204,7 +204,7 @@ public class Devless {
 
     }
 
-    public void call(String serviceName, String actionName, List<String> params, final RequestResponse requestResponseresponse) {
+    public void methodCall(String serviceName, String actionName, List<String> params, final RequestResponse requestResponseresponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(rootUrl + "/api/v1/service/"+ serviceName + "/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -239,7 +239,7 @@ public class Devless {
                 "",
                 password
         ));
-        call("devless", "login", loginParams, new RequestResponse() {
+        methodCall("devless", "login", loginParams, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
                 try {
@@ -249,7 +249,7 @@ public class Devless {
                     String result = payloadObject.getString("result");
                     JSONObject payloadReturnedObject = new JSONObject(result);
                     String token = payloadReturnedObject.getString("token");
-                    setDevlessUserToken(token);
+                    //setDevlessUserToken(token);
                     if (result.equalsIgnoreCase("false")){
                         //Wrong Email or Password
                         loginResponse.OnLogInFailed("Wrong Email or Password");
@@ -274,7 +274,7 @@ public class Devless {
                 "",
                 password
         ));
-        call("devless", "login", loginParams, new RequestResponse() {
+        methodCall("devless", "login", loginParams, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
 
