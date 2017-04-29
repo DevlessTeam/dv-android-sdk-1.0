@@ -1,16 +1,17 @@
 package androidsdk.devless.io.devless.main;
 
 import android.content.Context;
-
+import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import androidsdk.devless.io.devless.services.APISERVICE;
 import androidsdk.devless.io.devless.services.DELETEAPISERVICE;
 import androidsdk.devless.io.devless.services.PATCHAPISERVICE;
@@ -24,7 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class Devless {
+public class Devless extends AppCompatActivity implements Serializable{
 
     Context mContext;
     private String rootUrl, serviceName, token, devlessUserToken="";
@@ -174,7 +175,8 @@ public class Devless {
     }
 
 
-    public void signUpWithEmailAndPassword(String email, String password, final RequestResponse requestResponse) {
+    public void signUpWithEmailAndPassword(String email, final String password, final SharedPreferences sp, final RequestResponse requestResponse) {
+        final SharedPreferences.Editor editor = sp.edit();
         List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
                 email, password, "", "", "", "", ""
         ));
@@ -182,14 +184,33 @@ public class Devless {
         methodCall("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
-                requestResponse.OnSuccess(response);
+                try {
+                    JSONObject JO = new JSONObject(response);
+                    String payload = JO.getString("payload");
+                    JSONObject payloadObject = new JSONObject(payload);
+                    String result = payloadObject.getString("result");
+                    JSONObject resultObject = new JSONObject(result);
+                    if(resultObject.length() ==  2){
+                        requestResponse.OnSuccess(payload);
+                        String token  =  resultObject.getString("token");
+                        editor.putString("devlessUserToken", token);
+                        editor.commit();
+                    } else if (resultObject.length() == 3) {
+                        requestResponse.OnSuccess("Seems Email already exists");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
         });
 
     }
 
-    public void signUpWithUsernameAndPassword(String userName, String password, final RequestResponse requestResponse) {
+    public void signUpWithUsernameAndPassword(String userName, String password, SharedPreferences sp, final SignUpResponse signUpResponse) {
+        final SharedPreferences.Editor editor = sp.edit();
         List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
                 "", password, userName, "", "", "", ""
         ));
@@ -197,7 +218,26 @@ public class Devless {
         methodCall("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
-                requestResponse.OnSuccess(response);
+
+                try {
+                    JSONObject JO = new JSONObject(response);
+                    String payload = JO.getString("payload");
+                    JSONObject payloadObject = new JSONObject(payload);
+                    String result = payloadObject.getString("result");
+                    JSONObject resultObject = new JSONObject(result);
+                    if(resultObject.length() ==  2){
+                        signUpResponse.OnSignUpSuccess(payload);
+                        String token  =  resultObject.getString("token");
+                        editor.putString("devlessUserToken", token);
+                        editor.commit();
+                    } else if (resultObject.length() == 3) {
+                        signUpResponse.OnSignUpFailed("Seems UserName already exists");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
         });
@@ -232,7 +272,8 @@ public class Devless {
     }
 
 
-    public void loginWithEmailAndPassword(String email, final String password, final LoginResponse loginResponse){
+    public void loginWithEmailAndPassword(String email, final String password, final SharedPreferences sp, final LoginResponse loginResponse){
+        final SharedPreferences.Editor editor = sp.edit();
         List<String> loginParams  = new ArrayList<>(Arrays.asList(
                 "",
                  email,
@@ -242,21 +283,21 @@ public class Devless {
         methodCall("devless", "login", loginParams, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
+
                 try {
                     JSONObject jO = new JSONObject(response);
                     String payload = jO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
-                    String result = payloadObject.getString("result");
-                    JSONObject payloadReturnedObject = new JSONObject(result);
-                    String token = payloadReturnedObject.getString("token");
-                    //setDevlessUserToken(token);
-                    if (result.equalsIgnoreCase("false")){
-                        //Wrong Email or Password
-                        loginResponse.OnLogInFailed("Wrong Email or Password");
-
+                    String resultValue = loopJson(payloadObject).get(1);
+                    if(!resultValue.equalsIgnoreCase("false")){
+                        String result = payloadObject.getString("result");
+                        JSONObject payloadReturnedObject = new JSONObject(result);
+                        String token = payloadReturnedObject.getString("token");
+                        editor.putString("devlessUserToken", token);
+                        editor.commit();
+                        loginResponse.OnLogInSuccess(result);
                     } else {
-                        //Login Success
-                        loginResponse.OnLogInSuccess(result, token);
+                        loginResponse.OnLogInFailed("Wrong Email or Password");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -267,7 +308,8 @@ public class Devless {
 
     }
 
-    public void loginWithUsernameAndPassword(String userName, final String password, final LoginResponse loginResponse){
+    public void loginWithUsernameAndPassword(String userName, final String password, final SharedPreferences sp ,final LoginResponse loginResponse){
+        final SharedPreferences.Editor editor = sp.edit();
         List<String> loginParams  = new ArrayList<>(Arrays.asList(
                 userName,
                 "",
@@ -277,22 +319,22 @@ public class Devless {
         methodCall("devless", "login", loginParams, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
-
                 try {
                     JSONObject jO = new JSONObject(response);
                     String payload = jO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
-                    String result = payloadObject.getString("result");
-                    JSONObject payloadReturnedObject = new JSONObject(result);
-                    String token = payloadReturnedObject.getString("token");
-                    if (result.equalsIgnoreCase("false")){
-                        //Wrong Email or Password
-                        loginResponse.OnLogInFailed("Wrong UserName or Password");
-
+                    String resultValue = loopJson(payloadObject).get(1);
+                    if(!resultValue.equalsIgnoreCase("false")){
+                        String result = payloadObject.getString("result");
+                        JSONObject payloadReturnedObject = new JSONObject(result);
+                        String token = payloadReturnedObject.getString("token");
+                        editor.putString("devlessUserToken", token);
+                        editor.commit();
+                        loginResponse.OnLogInSuccess(result);
                     } else {
-                        //Login Success
-                        loginResponse.OnLogInSuccess(result, token);
+                        loginResponse.OnLogInFailed("Wrong UserName or Password");
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -302,6 +344,16 @@ public class Devless {
 
     }
 
+    public void logout(final LogoutResponse logoutResponse){
+        final List<String> logOutParams  = new ArrayList<>();
+        methodCall("devless", "logout", logOutParams, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                logoutResponse.OnLogOutSuccess(response);
+            }
+        });
+    }
+
 
     public interface RequestResponse {
         void OnSuccess(String response);
@@ -309,14 +361,18 @@ public class Devless {
     }
 
     public interface LoginResponse {
-        void OnLogInSuccess(String payload, String userToken);
+        void OnLogInSuccess(String payload);
         void OnLogInFailed(String error);
     }
 
+    public interface LogoutResponse {
+        void OnLogOutSuccess(String response);
+
+    }
 
     public interface SignUpResponse{
         void OnSignUpSuccess (String payload);
-        void OnSignUpFailed  (String error);
+        void OnSignUpFailed  (String errorMessage);
     }
 
     public String getServiceName() {
@@ -327,12 +383,39 @@ public class Devless {
         this.serviceName = serviceName;
     }
 
-    public String getDevlessUserToken() {
+    private String getDevlessUserToken() {
         return devlessUserToken;
     }
 
-    public void setDevlessUserToken(String devlessUserToken) {
+    private void setDevlessUserToken(String devlessUserToken) {
         this.devlessUserToken = devlessUserToken;
     }
+
+    public void addUserToken (SharedPreferences sharedPreferences) {
+        if (sharedPreferences.contains("devlessUserToken" )){
+            String devlessUserToken = sharedPreferences.getString("devlessUserToken", "Error");
+            this.setDevlessUserToken(devlessUserToken);
+            //Log.e("Token added as header", devlessUserToken);
+        } else {
+            //Log.e("No header", "user has not logged in or he has been logged out of the system");
+        }
+    }
+
+    private List<String> loopJson (JSONObject jsonObject){
+        List<String> ele = new ArrayList<>();
+        int i = 0;
+        for(Iterator<String> keys=jsonObject.keys();keys.hasNext();) {
+            try {
+                ele.add(String.valueOf(jsonObject.get(keys.next())));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+
+        return ele;
+    }
+
 }
 
