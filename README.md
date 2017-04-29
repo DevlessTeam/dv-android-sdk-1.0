@@ -1,4 +1,5 @@
 
+
 # dv-android-sdk-1.0
 
 ## SETUP
@@ -292,5 +293,25 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
             }
         });
 ```
+        List<String> signUpDetails = new ArrayList<>(Arrays.asList(
+                email, password, username, phoneNumber, firstname, lastname
+        ));
 
+        devless.call("devless", "signUp", signUpDetails, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+              //Do what you please with the response you get
+
+              Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+
+              //use the payload for something or lets just log it for now
+              Log.v("-----Get Response-----", response);
+            }
+        });
+
+```
+### This ***Call*** thingy is a very powerful tool in devles read more about it and exploit take full advantage of it. Thanks for following this guide. Keep using devless and tell your friends about devless. Devless is easy and superfast.
+# Devless_Android_SDK
+This is a working library to add to your android project in order for your app to talk to your delvess backend
 ### Thanks for following this guide. Keep using devless and tell your friends about devless. DevLess is easy and superfast.
+
