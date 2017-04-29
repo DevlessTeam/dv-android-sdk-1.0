@@ -1,6 +1,5 @@
 
-
-# dv-android-sdk-1.0
+# Devless_Android_SDK( dv-android-sdk-1.0)
 
 ## SETUP
 #### Step One
@@ -16,8 +15,8 @@ You should see a wizard, select the option that says ***Import .JAR/.AAR Package
 
 
 #### Step Three
-- Go to your app build gradle and add the code below there. 
-- Click on sync. 
+- Go to your app build gradle and add the code below there.
+- Click on sync.
 - Wait till its done.
 ```Java
   //dv-android-sdk-1.0 Dependencies
@@ -32,25 +31,29 @@ The above should complete the DevLess integration process.
 ## Usage
 
 ### Get these four things before starting.
-Get your **app url**, **the service name**, **devless token** and **table name** From your DevLess Instance 
+Get your **app url**, **the service name**, **devless token** and **table name** From your DevLess Instance
 
 ## Create a devless instance like this
 ```Java
 
   /**
     String appUrl = ""; //put your app url here without an end slash
-    String serviceName = ""; //put the particular service name you want to query data from here
     String devlessToken = ""; //put the devless token right here
 
     //example below
   */
+  //Create a shared preference like this
+   SharedPreferences sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
-  //Do it this way
+  //Now go ahead and set devless up
   String appUrl = "http://afterpush.herokuapp.com";  // remember no slash after the com just the absolute URL
-  String serviceName = "new_service"; //this is the name of my service;
   String devlessToken = "f9372bad91503a3d4da8824ef6e9ebe6"; //this is my token
 
-  Devless devless = new Devless(this, appUrl, serviceName, devlessToken);
+  //This is how to create a devless instance
+  Devless devless = new Devless(this, appUrl, devlessToken);
+
+  //setUpDevlessUserToken Right under the instance and pass in the name of your shratd prefernce variable. Im my case i called my shared prefernce sp
+  devless.addUserToken(sp);
 
 ```
 
@@ -61,8 +64,9 @@ Get your **app url**, **the service name**, **devless token** and **table name**
 ```Java
 
 /**
-//call the getData Method on the devless instance. it takes two parameters(tableName, new //Devless.RequestResponse) ie table name and callback. your response will be in the void OnSuccess method  //Do what ever you want with the response.
+//call the getData Method on the devless instance. it takes three parameters(serviceName, tableName, new Devless.RequestResponse) ie service name, table name and callback. Your response will be in the void OnSuccess method  //Do what ever you want with the response.
 
+String serviceName = ""// Your service name here
 String tableName = ""// Your table name here
 devless.getData(tableName, new Devless.RequestResponse() {
           @Override
@@ -73,9 +77,10 @@ devless.getData(tableName, new Devless.RequestResponse() {
  //watch this example below      
 */  
 
+String serviceName = "new_service";  
 String tableName = "names";   
 
-devless.getData(tableName, new Devless.RequestResponse(){
+devless.getData(serviceName,tableName, new Devless.RequestResponse(){
             @Override
             public void OnSuccess(String response){
                 //Do what you want with the data here
@@ -101,8 +106,11 @@ devless.getData(tableName, new Devless.RequestResponse(){
     dataToPost.put("name", "Abigail");
     dataToPost.put("email", "obengabigail@gmail.com");
 
-    //call the postData method on the devless instance you created earlier and specify the table name
-    devless.postData(tableName, dataToPost, new Devless.RequestResponse() {
+    //call the postData method on the devless instance you created earlier and specify the service name and the table name
+    String serviceName = ""//your service name
+    String tableName = ""//your table name
+
+    devless.postData(serviceName,tableName, dataToPost, new Devless.RequestResponse() {
             @Override
             public void OnSuccess(String response) {
               //Do what you want with the data here
@@ -125,9 +133,13 @@ devless.getData(tableName, new Devless.RequestResponse(){
 Map<String, Object> dataToChange = new HashMap<>();
       dataToChange.put("name", "Nana Akua");
 
-      //Call the edit method on the devless instance you already created and pass in the table name, dataToChange, id of the recored and a new Devless.RequestResponse() to process your response to see whether it has been updated or not
+      //Call the edit method on the devless instance you already created and pass in the service name, table name, dataToChange, id of the recored and a new Devless.RequestResponse() to process your response to see whether it has been updated or not
 
-      devless.edit(tableName, dataToChange, "1", new Devless.RequestResponse() {
+      String serviceName = ""//your service name
+      String tableName = ""//your table name
+      String id = "1"// replace with the id you want to delete
+
+      devless.edit(serviceName, tableName, dataToChange, id, new Devless.RequestResponse() {
           @Override
           public void OnSuccess(String response) {
               //Do what you want with the data here
@@ -146,7 +158,11 @@ Map<String, Object> dataToChange = new HashMap<>();
 #### All you need is the id of the record you want to delete and just call the delete ,method on the devless instance we already created. Lets say we want to delete an item with id "2" from the table. this is exactly how we will go about it.
 
 ```Java
-devless.delete(tableName, "2", new Devless.RequestResponse() {
+String serviceName = ""//your service name
+String tableName = ""//your table name
+String id = "1"// replace with the id you want to delete
+
+devless.delete(serviceName, tableName, id, new Devless.RequestResponse() {
           @Override
           public void OnSuccess(String response) {
             //Do what you want with the data here
@@ -162,12 +178,16 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
 ```
 
 ## Deleting all the data in the table at once
-#### This is quite easy to do because the only parameter required is the tableName. lets delete all the records in our names table under the service ***new_service***. 
+#### This is quite easy to do because the only parameter required is the tableName. lets delete all the records in our names table under the service ***new_service***.
 
 ```Java
-  //Call the deleteAll method on the instance and pass in the table name and a new instance oo
+  //Call the deleteAll method on the instance and pass in the service name, table name and a new instance
   //Devless.RequestResponse()
-  devless.deleteAll(tableName, new Devless.RequestResponse() {
+
+  String serviceName = ""//your service name
+  String tableName = ""//your table name
+
+  devless.deleteAll(serviceName, tableName, new Devless.RequestResponse() {
            @Override
            public void OnSuccess(String response) {
              //Do what you want with the data here
@@ -188,22 +208,22 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
 #### All you need is the email and password of the user to sign them up. lets sign abgail up with the email ***abigailobeng@gmail.com*** and password ***passwordOne***.
 
 ```Java
-  //Call the signUpWithEmailAndPassword method on the devless instance and pass in the email and //password that is it.
+  //Call the signUpWithEmailAndPassword method on the devless instance and pass in the email, password, SharedPreferences and callback.
 
         String email = "abigailobeng@gmail.com";
         String password = "passwordOne";
 
-        devless.signUpWithEmailAndPassword(email, password, new Devless.RequestResponse() {
+        devless.signUpWithEmailAndPassword(email, password, sp, new Devless.SignUpResponse() {
             @Override
-            public void OnSuccess(String response) {
-              //Do what you want with the data here
-              //lets toast it
-              Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
+            public void OnSignUpSuccess(String payload) {
+              //Toast a success message and chevkout the paload or just do what you want with the payload or simple write your logic here which is waht you wan to happen when user successfully sign up
+                Log.e("EmailPasswordSignUpSuccess", payload);
+            }
 
-              //lest log the response
-              Log.v("-----Get Response-----", response);
-
-              //Do whatever you want with the data
+            @Override
+            public void OnSignUpFailed(String errorMessage) {
+              //Toast a failure message and  or simple write your logic here which is what you want to happen when user sign up fails
+                Log.e("EmailPasswordSignUpFailure", errorMessage);
             }
         });
 ```
@@ -212,24 +232,24 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
 #### All you need is the username and password of the user to sign them up. Lets sign abigail up with the username ***abigailobeng*** and password ***passwordOne***.
 
 ```Java
-  //Call the signUpWithUserNameAndPassword method on the devless instance and pass in the username //and password that is it.
+  //Call the signUpWithUserNameAndPassword method on the devless instance and pass in the username, password, SharedPreferences and your callback that is it.
 
        String username = "abigailoben";
        String password = "passwordOne";
 
-       devless.signUpWithUserNameAndPassword(username, password, new Devless.RequestResponse() {
-           @Override
-           public void OnSuccess(String response) {
-             //Do what you want with the data here
-             //lets toast it
-             Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
+       devless.signUpWithUsernameAndPassword("mikko", "password", sp, new Devless.SignUpResponse() {
+             @Override
+             public void OnSignUpSuccess(String payload) {
+               //Toast a success message and chevkout the paload or just do what you want with the payload or simple write your logic here which is waht you wan to happen when user successfully sign up
+                 Log.e("UnamePasswordSignUpSuccess", payload);
+             }
 
-             //lest log the response
-             Log.v("-----Get Response-----", response);
-
-             //Do whatever you want with the data
-           }
-       });
+             @Override
+             public void OnSignUpFailed(String errorMessage) {
+               //Toast a failure message and  or simple write your logic here which is what you want to happen when user sign up fails
+                Log.e("UnamePasswordSignUpFailure", errorMessage);
+             }
+         });
 ```
 
 ## Logging Users in with devless
@@ -239,29 +259,24 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
 #### All you need is the email and password of the user to Log them in. Lets Log abigail in with the email ***abigailobeng@gmail.com*** and password ***passwordOne*** This is how we will go about it.  
 
 ```Java
-  //Get your string set up and call the loginUserWithEmailAndPassword method on the devless //instance we already created and pass in email, password and a new Devless.LoginResponse();
+  //Get your string set up and call the loginUserWithEmailAndPassword method on the devless instance we already created and pass in email, password, SharedPreferences and a new Devless.LoginResponse();
+
   String username = "abigailobeng@gmail.com";
   String password = "passwordOne";
-  devless.loginUserWithEmailAndPassword(email, password, new Devless.LoginResponse() {
-          @Override
-          public void OnLogInSuccess(String payload) {
-              //When user name and password matches  do something
-              //Lets toast something
 
-              Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+  devless.loginWithEmailAndPassword("meko@gmail.com", "password", sp, new Devless.LoginResponse() {
+           @Override
+           public void OnLogInSuccess(String payload) {
+              //Toast a success message and checkout the paload or just do what you want with the payload or simple write your logic here which is what you want to happen when user successfully logs in
+               Log.e("EmailPassLoginSuccess", payload);
+           }
 
-              //use the payload for something or lets just log it for now
-              Log.v("-----Get Payload-----", payload);
-          }
-
-          @Override
-          public void OnLogInFailed(String error) {
-            //When user name and password does not match or record does not exist
-            //Lets toast something
-
-            Toast.makeText(MainActivity.this, error, Toast.LENGTH_LONG).show();
-          }
-      });
+           @Override
+           public void OnLogInFailed(String error) {
+             //Toast a failure message and  or simple write your logic here which is what you want to happen when user log in fails
+               Log.e("EmailPassLoginfailure", error);
+           }
+       });
 ```
 
 ### Login User with username and password
@@ -269,35 +284,34 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
 #### All you need is the username and password of the user to log them in. Lets Log abigail in with the username ***abigailobeng*** and password ***passwordOne*** This is how we will go about it.
 
 ```Java
-  //Get your string set up and call the loginUserWithUserNameAndPassword method on the devless //instance we already created and pass in username, password and a new Devless.LoginResponse();
+  //Get your string set up and call the loginUserWithUserNameAndPassword method on the devless //instance we already created and pass in username, password, SharedPreferences and a new Devless.LoginResponse();
+
   String username = "abigailobeng";
   String password = "passwordOne";
-  devless.loginUserWithUserNameAndPassword(username, password, new Devless.LoginResponse() {
+
+  devless.loginWithUsernameAndPassword("mikko", "password", sp, new Devless.LoginResponse() {
             @Override
             public void OnLogInSuccess(String payload) {
-              //When user name and password matches  do something
-              //Lets toast something
-
-              Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-
-              //use the payload for something or lets just log it for now
-              Log.v("-----Get Payload-----", payload);
+              //Toast a success message and checkout the paload or just do what you want with the payload or simple write your logic here which is what you want to happen when user successfully logs in
+                Log.e("UnamePassLogInSucc", payload);
             }
 
             @Override
             public void OnLogInFailed(String error) {
-              //When user name and password does not match or record does not exist
-              //Lets toast something
-
-              Toast.makeText(MainActivity.this, error, Toast.LENGTH_LONG).show();
+              //Toast a failure message and  or simple write your logic here which is what you want to happen when user log in fails
+                Log.e("UnamePassLoginFailure", error);
             }
         });
 ```
+# DEVLESS METHOD_CALL
+
+```Java
+      //Set up your params in the List<String> and call METHOD_CALL on it
         List<String> signUpDetails = new ArrayList<>(Arrays.asList(
                 email, password, username, phoneNumber, firstname, lastname
         ));
 
-        devless.call("devless", "signUp", signUpDetails, new Devless.RequestResponse() {
+        devless.methodCall("devless", "signUp", signUpDetails, new Devless.RequestResponse() {
             @Override
             public void OnSuccess(String response) {
               //Do what you please with the response you get
@@ -311,7 +325,7 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
 ```
 
 ### This ***Call*** thingy is a very powerful tool in devles read more about it and exploit take full advantage of it. Thanks for following this guide. Keep using devless and tell your friends about devless. Devless is easy and superfast.
+
 # Devless_Android_SDK
 This is a working library to add to your android project in order for your app to talk to your delvess backend
 ### Thanks for following this guide. Keep using devless and tell your friends about devless. DevLess is easy and superfast.
-
