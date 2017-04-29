@@ -30,12 +30,6 @@ public class Devless extends AppCompatActivity implements Serializable{
     Context mContext;
     private String rootUrl, token, devlessUserToken="";
 
-    public Devless(Context mContext, String rootUrl, String token, String devlessUserToken) {
-        this.mContext = mContext;
-        this.rootUrl = rootUrl;
-        this.token = token;
-        this.devlessUserToken = devlessUserToken;
-    }
 
     public Devless(Context mContext, String rootUrl, String token) {
         this.mContext = mContext;

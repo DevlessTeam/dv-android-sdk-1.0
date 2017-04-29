@@ -1,6 +1,5 @@
 
-
-# dv-android-sdk-1.0
+# Devless_Android_SDK( dv-android-sdk-1.0)
 
 ## SETUP
 #### Step One
@@ -16,8 +15,8 @@ You should see a wizard, select the option that says ***Import .JAR/.AAR Package
 
 
 #### Step Three
-- Go to your app build gradle and add the code below there. 
-- Click on sync. 
+- Go to your app build gradle and add the code below there.
+- Click on sync.
 - Wait till its done.
 ```Java
   //dv-android-sdk-1.0 Dependencies
@@ -32,7 +31,7 @@ The above should complete the DevLess integration process.
 ## Usage
 
 ### Get these four things before starting.
-Get your **app url**, **the service name**, **devless token** and **table name** From your DevLess Instance 
+Get your **app url**, **the service name**, **devless token** and **table name** From your DevLess Instance
 
 ## Create a devless instance like this
 ```Java
@@ -162,7 +161,7 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
 ```
 
 ## Deleting all the data in the table at once
-#### This is quite easy to do because the only parameter required is the tableName. lets delete all the records in our names table under the service ***new_service***. 
+#### This is quite easy to do because the only parameter required is the tableName. lets delete all the records in our names table under the service ***new_service***.
 
 ```Java
   //Call the deleteAll method on the instance and pass in the table name and a new instance oo
@@ -293,6 +292,9 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
             }
         });
 ```
+# DEVLESS METHOD_CALL
+
+```Java
         List<String> signUpDetails = new ArrayList<>(Arrays.asList(
                 email, password, username, phoneNumber, firstname, lastname
         ));
@@ -311,7 +313,7 @@ devless.delete(tableName, "2", new Devless.RequestResponse() {
 
 ```
 ### This ***Call*** thingy is a very powerful tool in devles read more about it and exploit take full advantage of it. Thanks for following this guide. Keep using devless and tell your friends about devless. Devless is easy and superfast.
+
 # Devless_Android_SDK
 This is a working library to add to your android project in order for your app to talk to your delvess backend
 ### Thanks for following this guide. Keep using devless and tell your friends about devless. DevLess is easy and superfast.
-
