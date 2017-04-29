@@ -22,14 +22,14 @@ import androidsdk.devless.io.devless.main.Devless;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences sp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
         String appUrl = "http://afterpush.herokuapp.com";
         String serviceName = "new_service";
@@ -37,17 +37,53 @@ public class MainActivity extends AppCompatActivity {
         String tableName = "names";
 
         Map<String, Object> params = new HashMap<>();
-        params.put("name", "newer");
+        params.put("name", "neweresr13");
 
         Devless devless = new Devless(this, appUrl, serviceName, devlessToken);
         devless.addUserToken(sp);
 
-        devless.getData(tableName, new Devless.RequestResponse() {
-            @Override
-            public void OnSuccess(String response) {
-                Log.e("Query response", response);
-            }
-        });
+//        devless.getData(serviceName, tableName, new Devless.RequestResponse() {
+//            @Override
+//            public void OnSuccess(String response) {
+//                Log.e("Query response", response);
+//            }
+//        });
+//
+//        devless.postData(serviceName, tableName, params, new Devless.RequestResponse() {
+//            @Override
+//            public void OnSuccess(String response) {
+//                Log.e("Messge", response);
+//            }
+//        });
+//
+//        devless.edit(serviceName, tableName, params, "13", new Devless.RequestResponse() {
+//            @Override
+//            public void OnSuccess(String response) {
+//                Log.e("Messge13", response);
+//            }
+//        });
+
+//        devless.delete(serviceName, tableName, "13", new Devless.RequestResponse() {
+//            @Override
+//            public void OnSuccess(String response) {
+//                Log.e("Delete13", response);
+//            }
+//        });
+
+//        devless.deleteAll(serviceName, tableName, new Devless.RequestResponse() {
+//            @Override
+//            public void OnSuccess(String response) {
+//                Log.e("deletall", response);
+//            }
+//        });
+
+//        devless.logout(new Devless.LogoutResponse() {
+//            @Override
+//            public void OnLogOutSuccess(String response) {
+//                Log.e("Log Out", response);
+//            }
+//        });
+
 
 
 

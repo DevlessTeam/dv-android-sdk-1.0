@@ -28,24 +28,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Devless extends AppCompatActivity implements Serializable{
 
     Context mContext;
-    private String rootUrl, serviceName, token, devlessUserToken="";
+    private String rootUrl, token, devlessUserToken="";
 
-    public Devless(Context mContext, String rootUrl, String serviceName, String token, String devlessUserToken) {
+    public Devless(Context mContext, String rootUrl, String token, String devlessUserToken) {
         this.mContext = mContext;
         this.rootUrl = rootUrl;
-        this.serviceName = serviceName;
         this.token = token;
         this.devlessUserToken = devlessUserToken;
     }
 
-    public Devless(Context mContext, String rootUrl, String serviceName, String token) {
+    public Devless(Context mContext, String rootUrl, String token) {
         this.mContext = mContext;
         this.rootUrl = rootUrl;
-        this.serviceName = serviceName;
         this.token = token;
     }
 
-    public void getData(String tableName, final RequestResponse requestResponse) {
+    public void getData(String serviceName, String tableName, final RequestResponse requestResponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -72,7 +70,7 @@ public class Devless extends AppCompatActivity implements Serializable{
         });
     }
 
-    public void postData(String tableName,  Map<String, Object> dataToAdd, final RequestResponse requestResponseresponse) {
+    public void postData(String serviceName, String tableName,  Map<String, Object> dataToAdd, final RequestResponse requestResponseresponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -99,7 +97,7 @@ public class Devless extends AppCompatActivity implements Serializable{
         });
     }
 
-    public void edit( String tableName, Map<String, Object> update,  String id, final RequestResponse requestResponseresponse) {
+    public void edit(String serviceName, String tableName, Map<String, Object> update,  String id, final RequestResponse requestResponseresponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -125,7 +123,7 @@ public class Devless extends AppCompatActivity implements Serializable{
     }
 
 
-    public void delete( String tableName,  String id, final RequestResponse requestResponse) {
+    public void delete(String serviceName, String tableName,  String id, final RequestResponse requestResponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -150,7 +148,7 @@ public class Devless extends AppCompatActivity implements Serializable{
         });
     }
 
-    public void deleteAll( String tableName,  final RequestResponse requestResponse) {
+    public void deleteAll(String serviceName, String tableName,  final RequestResponse requestResponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -373,14 +371,6 @@ public class Devless extends AppCompatActivity implements Serializable{
     public interface SignUpResponse{
         void OnSignUpSuccess (String payload);
         void OnSignUpFailed  (String errorMessage);
-    }
-
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
     }
 
     private String getDevlessUserToken() {
