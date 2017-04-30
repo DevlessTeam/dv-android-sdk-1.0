@@ -344,36 +344,6 @@ devless.delete(serviceName, tableName, id, new Devless.RequestResponse() {
             }
         });
 ```
-# DEVLESS METHOD_CALL
-
-```Java
-
-        //Devless Call
-        //Set up your params in the List<String> and call METHOD_CALL on it
-        String email = "abigailobeng@gmail.com";//email
-        String password = "password";// password
-        String userName = "abisco"; // userName
-        String phoneNumber = "0244419419";// phoneNumber
-        String firstName = "Abigail"; //firstName
-        String lastName = "Obeng"; //lastName
-
-      //Set up your params in the List<String> and call METHOD_CALL on it
-        List<String> signUpDetails = new ArrayList<>(Arrays.asList(
-                email, password, userName, phoneNumber, firstName, lastName
-        ));
-
-        devless.methodCall("devless", "signUp", signUpDetails, new Devless.RequestResponse() {
-            @Override
-            public void OnSuccess(String s) {
-              //Do what you please with the response you get
-
-              //use the payload for something or lets just log it for now
-              Log.v("-----Get Response-----", s);
-            }
-        });
-```
-
- This ***Call*** thingy is a very powerful tool in devless read more about it and exploit take full advantage of it. Thanks for following this guide. Keep using devless and tell your friends about devless. Devless is easy and superfast.
 
 
 # Devless_Android_SDK(dv-android-sdk-1.0)
