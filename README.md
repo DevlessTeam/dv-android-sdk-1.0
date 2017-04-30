@@ -370,9 +370,10 @@ devless.delete(serviceName, tableName, id, new Devless.RequestResponse() {
               Log.v("-----Get Response-----", s);
             }
         });
-
 ```
+
  This ***Call*** thingy is a very powerful tool in devless read more about it and exploit take full advantage of it. Thanks for following this guide. Keep using devless and tell your friends about devless. Devless is easy and superfast.
+
 
 # Devless_Android_SDK(dv-android-sdk-1.0)
 This is a working library to add to your android project in order for your app to talk to your delvess backend
