@@ -1,5 +1,5 @@
 
-# Devless_Android_SDK( dv-android-sdk-1.0)
+# Devless_Android_SDK(dv-android-sdk-1.0)
 
 ## SETUP
 #### Step One
@@ -66,8 +66,8 @@ Get your **app url**, **the service name**, **devless token** and **table name**
 /**
 //call the getData Method on the devless instance. it takes three parameters(serviceName, tableName, new Devless.RequestResponse) ie service name, table name and callback. Your response will be in the void OnSuccess method  //Do what ever you want with the response.
 
-String serviceName = ""// Your service name here
-String tableName = ""// Your table name here
+String serviceName = "";// Your service name here
+String tableName = "";// Your table name here
 devless.getData(serviceName, tableName, new Devless.RequestResponse() {
           @Override
           public void OnSuccess(String s) {
@@ -238,7 +238,7 @@ devless.delete(serviceName, tableName, id, new Devless.RequestResponse() {
 ```Java
   //Call the signUpWithUserNameAndPassword method on the devless instance and pass in the username, password, SharedPreferences and your callback that is it.
 
-       String userName = "abigailoben";
+       String userName = "abigailobeng";
        String password = "passwordOne";
 
        devless.signUpWithUsernameAndPassword(userName, password, sp, new Devless.SignUpResponse() {
@@ -343,8 +343,8 @@ devless.delete(serviceName, tableName, id, new Devless.RequestResponse() {
         });
 
 ```
-### This ***Call*** thingy is a very powerful tool in devles read more about it and exploit take full advantage of it. Thanks for following this guide. Keep using devless and tell your friends about devless. Devless is easy and superfast.
+ This ***Call*** thingy is a very powerful tool in devless read more about it and exploit take full advantage of it. Thanks for following this guide. Keep using devless and tell your friends about devless. Devless is easy and superfast.
 
-# Devless_Android_SDK
+# Devless_Android_SDK(dv-android-sdk-1.0)
 This is a working library to add to your android project in order for your app to talk to your delvess backend
 ### Thanks for following this guide. Keep using devless and tell your friends about devless. DevLess is easy and superfast.
