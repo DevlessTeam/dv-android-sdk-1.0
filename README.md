@@ -54,7 +54,7 @@ Get your **app url**, **the service name**, **devless token** and **table name**
 
   /*
   setUpDevlessUserToken Right under the instance and pass in the
-  name of your shratd prefernce variable. Im my case i called my shared prefernce sp
+  name of your shratd prefernce variable. Im my case i called my shared preference sp
   */
   devless.addUserToken(sp);
 
