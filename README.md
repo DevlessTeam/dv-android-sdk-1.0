@@ -3,7 +3,7 @@
 
 ## SETUP
 #### Step One
-Download the the 'dv-android-sdk-1.0.aar' file [here](https://raw.github.com/charlesagyemang/Devless_Android_SDK/blob/master/dv-android-sdk-1.0.aar) and save it on your pc or mac
+Download the the 'dv-android-sdk-1.0.aar' file [here](https://www.dropbox.com/s/hlavbc9a29tfvi0/dv-android-sdk-1.0.aar?dl=0) and save it on your pc or mac
 
 
 #### Step two
