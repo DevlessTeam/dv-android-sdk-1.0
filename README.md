@@ -4,7 +4,7 @@
 
 ## SETUP
 #### Step One
-Download the the 'dv-android-sdk-1.0.aar' file [here](https://www.dropbox.com/home/dv-android-sdk/1.0?preview=dv-android-sdk-1.0.aar) and save it on your pc or mac
+Download the the 'dv-android-sdk-1.0.aar' file [here](https://dv-android-sdk.herokuapp.com/uploads/upload/attachment/1/dv-android-sdk-1.0.aar) and save it on your pc or mac
 
 
 #### Step two
