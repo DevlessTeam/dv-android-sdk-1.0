@@ -1,6 +1,6 @@
+![alt text](https://img.shields.io/badge/dv--android--sdk--1.0-official-blue.svg)
 
 # Devless_Android_SDK(dv-android-sdk-1.0)
-![alt text](https://img.shields.io/badge/dv--android--sdk--1.0-official-blue.svg)
 
 ## SETUP
 #### Step One
