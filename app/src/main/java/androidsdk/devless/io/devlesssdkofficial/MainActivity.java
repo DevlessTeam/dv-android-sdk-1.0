@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             public void OnLogInFailed(String error) {
                 Log.e("UsernamePassLoginSucc", error);
             }
-        });
+        })
         */
 
 
