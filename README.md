@@ -359,7 +359,7 @@ Example: lets look into our names table in the new_service service and look for 
  devless.where("name", "charles").size(2).queryData(serviceName,tableName,new Devless.SearchResponse() {
             @Override
             public void OnSuccess(String response) {
-                Log.e("search response two==", response);
+                Log.e("==search response two==", response);
             }
         });
 ```
@@ -371,7 +371,7 @@ Example: lets look into our names table in the new_service service and look for 
  devless.where("name", "charles").queryData(serviceName,tableName,new Devless.SearchResponse() {
             @Override
             public void OnSuccess(String response) {
-                Log.e("search response two==", response);
+                Log.e("==search response all==", response);
             }
         });
 ```
