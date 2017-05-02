@@ -348,7 +348,7 @@ devless.delete(serviceName, tableName, id, new Devless.RequestResponse() {
 # Search / Query Data
 #### Key things
 - ***where*** takes fielfName and value you want to search
-- ***size** takes how many items you want the search to return
+- ***size*** takes how many items you want the search to return
 Example: lets look into our names table in the new_service service and look for anyone with the name charles and return onl 2 of the results
 
 ### Searching with size
