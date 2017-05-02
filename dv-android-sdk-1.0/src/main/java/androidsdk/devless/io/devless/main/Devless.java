@@ -28,7 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Devless extends AppCompatActivity implements Serializable{
 
     Context mContext;
-    private String rootUrl, token, devlessUserToken="";
+    private String rootUrl, token, devlessUserToken="", where;
+    private int size = -1 ;
 
 
     public Devless(Context mContext, String rootUrl, String token) {
@@ -385,6 +386,43 @@ public class Devless extends AppCompatActivity implements Serializable{
         }
     }
 
+    public Devless queryData(String serviceName, final String tableName, final SearchResponse searchResponse){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        final APISERVICE service = retrofit.create(APISERVICE.class);
+
+        final Call<ResponseBody> result = service.getCalls("db?table=" + tableName + "&size="+this.size+ "&where=" + this.where, token, devlessUserToken);
+
+        result.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    searchResponse.OnSuccess(response.body().string());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                searchResponse.OnSuccess(t.toString());
+            }
+        });
+        this.size= -1;
+        this.where = "";
+        return this;
+    }
+
+
+
+    public interface SearchResponse{
+        void OnSuccess(String response);
+    }
+
     private List<String> loopJson (JSONObject jsonObject){
         List<String> ele = new ArrayList<>();
         int i = 0;
@@ -400,6 +438,17 @@ public class Devless extends AppCompatActivity implements Serializable{
 
         return ele;
     }
+
+    public Devless size (int size){
+        this.size = size;
+        return  this;
+    }
+
+    public Devless where (String fieldName, String value){
+        this.where = fieldName + "," + value;
+        return this;
+    }
+
 
 }
 
