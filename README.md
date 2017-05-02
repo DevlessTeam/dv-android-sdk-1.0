@@ -345,6 +345,36 @@ devless.delete(serviceName, tableName, id, new Devless.RequestResponse() {
         });
 ```
 
+# Search / Query Data
+#### Key things
+- ***where*** takes fielfName and value you want to search
+- ***size** takes how many items you want the search to return
+Example: lets look into our names table in the new_service service and look for anyone with the name charles and return onl 2 of the results
+
+### Searching with size
+
+```Java
+ String serviceName = "new_service"// Your service_name here
+ String tableName  = "names"//replace with your table name
+ devless.where("name", "charles").size(2).queryData(serviceName,tableName,new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("search response two==", response);
+            }
+        });
+```
+
+### Searching All
+```Java
+ String serviceName = "new_service"// Your service_name here
+ String tableName  = "names"//replace with your table name
+ devless.where("name", "charles").queryData(serviceName,tableName,new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("search response two==", response);
+            }
+        });
+```
 
 # Devless_Android_SDK(dv-android-sdk-1.0)
 This is a working library to add to your android project in order for your app to talk to your delvess backend
