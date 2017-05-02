@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
+
         SharedPreferences sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
 
@@ -39,12 +39,35 @@ public class MainActivity extends AppCompatActivity {
         String tableName = "names";
 
         Map<String, Object> params = new HashMap<>();
-        params.put("name", "neweresr13");
+        params.put("name", "finney");
+        params.put("stage", 0);
 
-       Devless devless = new Devless(this, appUrl, devlessToken);
+        Devless devless = new Devless(this, appUrl, devlessToken);
+
 
         devless.addUserToken(sp);
 
+
+
+
+        devless.where("name", "finney").size(2).queryData(serviceName,tableName,new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("search response two==", response);
+            }
+        });
+
+        devless.where("stage", "0").queryData(serviceName,tableName, new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("search response all==", response);
+            }
+        });
+
+
+
+
+        /*
         devless.getData(serviceName, tableName, new Devless.RequestResponse() {
             @Override
             public void OnSuccess(String response) {
