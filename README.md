@@ -344,7 +344,16 @@ devless.delete(serviceName, tableName, id, new Devless.RequestResponse() {
             }
         });
 ```
+# Logout / Signout
 
+```Java
+ devless.logout(new Devless.LogoutResponse() {
+            @Override
+            public void OnLogOutSuccess(String s) {
+                
+            }
+        });
+```
 # Search / Query Data
 #### Key things
 - ***where*** takes fielfName and value you want to search
