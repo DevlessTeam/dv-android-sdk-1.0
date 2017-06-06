@@ -63,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        /*
+
         devless.where("stage", "0").queryData(serviceName,tableName, new Devless.SearchResponse() {
             @Override
             public void OnSuccess(String response) {
                 Log.e("search response all==", response);
             }
         });
-    */
+
 
 
 
@@ -168,6 +168,18 @@ public class MainActivity extends AppCompatActivity {
             }
         })
         */
+
+//        devless.loginWithUsernameAndPassword("mikko", "password", sp, new Devless.LoginResponse() {
+//            @Override
+//            public void OnLogInSuccess(String payload) {
+//                Log.e("UsernamePassLogInSucc", payload);
+//            }
+//
+//            @Override
+//            public void OnLogInFailed(String error) {
+//                Log.e("UsernamePassLoginSucc", error);
+//            }
+//        });
 
 
 

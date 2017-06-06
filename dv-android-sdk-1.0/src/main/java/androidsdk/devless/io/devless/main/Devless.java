@@ -421,6 +421,9 @@ public class Devless extends AppCompatActivity implements Serializable{
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
+                        size= -1;
+                        where = "";
+                        orderBy = "";
                         searchResponse.OnSuccess(response.body().string());
 
                     } catch (IOException e) {
@@ -430,15 +433,16 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    size= -1;
+                    where = "";
+                    orderBy = "";
                     searchResponse.OnSuccess(t.toString());
                 }
             });
 
         }
 
-        this.size= -1;
-        this.where = "";
-        this.orderBy = "";
+
         return this;
     }
 
