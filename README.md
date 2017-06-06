@@ -385,7 +385,7 @@ Example: lets look into our names table in the new_service service and look for 
         });
 ```
 
-###Ordering By
+### Ordering By
 ```Java
  String serviceName = "new_service"// Your service_name here
  String tableName  = "names"//replace with your table name
@@ -397,7 +397,7 @@ Example: lets look into our names table in the new_service service and look for 
         });
 ```
 
-###OrderBy and Search 
+### OrderBy and Search 
 ```Java
  String serviceName = "new_service"// Your service_name here
  String tableName  = "names"//replace with your table name
@@ -409,7 +409,7 @@ Example: lets look into our names table in the new_service service and look for 
         });
 ```
 
-###Order , Search and Size
+### Order , Search and Size
 ```Java
  String serviceName = "new_service"// Your service_name here
  String tableName  = "names"//replace with your table name
