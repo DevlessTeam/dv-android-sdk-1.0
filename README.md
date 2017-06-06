@@ -4,7 +4,7 @@
 
 ## SETUP
 #### Step One
-Download the the 'dv-android-sdk-1.0.aar' file [here](https://github.com/DevlessTeam/dv-android-sdk-1.0/raw/master/dv-android-sdk-1.0/src/dv-android-sdk-1.0.aar) and save it on your pc or mac
+Download the the 'dv-android-sdk-1.0.aar' file [here](https://github.com/DevlessTeam/dv-android-sdk-1.0/blob/master/dv-android-sdk-1.0/src/dv-android-sdk-1.0.aar?raw=true) and save it on your pc or mac
 
 
 #### Step two
@@ -381,6 +381,45 @@ Example: lets look into our names table in the new_service service and look for 
             @Override
             public void OnSuccess(String response) {
                 Log.e("==search response all==", response);
+            }
+        });
+```
+
+### Ordering By
+```Java
+ String serviceName = "new_service"// Your service_name here
+ String tableName  = "names"//replace with your table name
+ devless.orderBy("id").queryData(serviceName,tableName,new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("==orderBy response all==", response);
+            }
+        });
+```
+
+### OrderBy and Search 
+```Java
+ String serviceName = "new_service"// Your service_name here
+ String tableName  = "names"//replace with your table name
+ devless.orderBy("id").where("name", "finney").queryData(serviceName,tableName,new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("==orderBy response all==", response);
+            }
+        });
+```
+
+### Order , Search and Size
+```Java
+ String serviceName = "new_service"// Your service_name here
+ String tableName  = "names"//replace with your table name
+ devless.orderBy("id")
+        .size(3)
+        .where("name", "finney")
+        .queryData(serviceName,tableName,new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("==orderBy response all==", response);
             }
         });
 ```
