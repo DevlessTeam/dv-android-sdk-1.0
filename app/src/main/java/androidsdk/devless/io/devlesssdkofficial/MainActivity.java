@@ -47,23 +47,30 @@ public class MainActivity extends AppCompatActivity {
 
         devless.addUserToken(sp);
 
+        Log.e("token", devless.getDevlessUserToken());
 
 
 
-        devless.where("name", "finney").size(2).queryData(serviceName,tableName,new Devless.SearchResponse() {
+
+        devless.where("name", "finney")
+                .orderBy("id")
+                .size(2)
+                .queryData(serviceName,tableName,new Devless.SearchResponse() {
             @Override
             public void OnSuccess(String response) {
                 Log.e("search response two==", response);
             }
         });
 
+
+        /*
         devless.where("stage", "0").queryData(serviceName,tableName, new Devless.SearchResponse() {
             @Override
             public void OnSuccess(String response) {
                 Log.e("search response all==", response);
             }
         });
-
+    */
 
 
 
@@ -161,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
             }
         })
         */
+
+
 
 
 

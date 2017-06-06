@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Devless extends AppCompatActivity implements Serializable{
 
     Context mContext;
-    private String rootUrl, token, devlessUserToken="", where;
+    private String rootUrl, token, devlessUserToken="", where = "o", orderBy="id";
     private int size = -1 ;
 
 
@@ -368,7 +368,7 @@ public class Devless extends AppCompatActivity implements Serializable{
         void OnSignUpFailed  (String errorMessage);
     }
 
-    private String getDevlessUserToken() {
+    public String getDevlessUserToken() {
         return devlessUserToken;
     }
 
@@ -394,26 +394,51 @@ public class Devless extends AppCompatActivity implements Serializable{
                 .build();
         final APISERVICE service = retrofit.create(APISERVICE.class);
 
-        final Call<ResponseBody> result = service.getCalls("db?table=" + tableName + "&size="+this.size+ "&where=" + this.where, token, devlessUserToken);
 
-        result.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    searchResponse.OnSuccess(response.body().string());
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if(this.where.equalsIgnoreCase("o") ){
+            final Call<ResponseBody> result = service.getCalls("db?table=" + tableName + "&size="+this.size+ "&orderBy=" + this.orderBy, token, devlessUserToken);
+            result.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        searchResponse.OnSuccess(response.body().string());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                searchResponse.OnSuccess(t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    searchResponse.OnSuccess(t.toString());
+                }
+            });
+        } else {
+
+            final Call<ResponseBody> result = service.getCalls("db?table=" + tableName + "&size="+this.size+ "&where=" + this.where +"&orderBy=" + this.orderBy, token, devlessUserToken);
+            result.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        searchResponse.OnSuccess(response.body().string());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    searchResponse.OnSuccess(t.toString());
+                }
+            });
+
+        }
+
         this.size= -1;
         this.where = "";
+        this.orderBy = "";
         return this;
     }
 
@@ -449,6 +474,10 @@ public class Devless extends AppCompatActivity implements Serializable{
         return this;
     }
 
+    public Devless orderBy (String orderBy){
+        this.orderBy = orderBy;
+        return this;
+    }
 
 }
 
