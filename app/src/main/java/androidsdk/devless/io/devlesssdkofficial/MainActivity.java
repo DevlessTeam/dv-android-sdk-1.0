@@ -71,6 +71,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        devless.orderBy("id").queryData(serviceName,tableName, new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("search response all==", response);
+            }
+        });
+
+        devless.orderBy("name").queryOrderedData(serviceName, tableName, new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("search order by==", response);
+            }
+        });
+
+        devless.orderBy("devless_user_id").queryOrderedData(serviceName, tableName, new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("search order by==", response);
+            }
+        });
+
 
 
 

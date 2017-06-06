@@ -3,6 +3,8 @@ package androidsdk.devless.io.devless.main;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -28,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Devless extends AppCompatActivity implements Serializable{
 
     Context mContext;
-    private String rootUrl, token, devlessUserToken="", where = "o", orderBy="id";
+    private String rootUrl, token, devlessUserToken="", where = "", orderBy="id";
     private int size = -1 ;
 
 
@@ -396,7 +398,8 @@ public class Devless extends AppCompatActivity implements Serializable{
 
 
 
-        if(this.where.equalsIgnoreCase("o") ){
+        if(TextUtils.isEmpty(this.where)){
+
             final Call<ResponseBody> result = service.getCalls("db?table=" + tableName + "&size="+this.size+ "&orderBy=" + this.orderBy, token, devlessUserToken);
             result.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -446,6 +449,34 @@ public class Devless extends AppCompatActivity implements Serializable{
         return this;
     }
 
+
+    public Devless queryOrderedData(String serviceName, final String tableName, final SearchResponse searchResponse){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        final APISERVICE service = retrofit.create(APISERVICE.class);
+
+            final Call<ResponseBody> result = service.getCalls("db?table=" + tableName + "&size="+this.size+ "&orderBy=" + this.orderBy, token, devlessUserToken);
+            result.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        searchResponse.OnSuccess(response.body().string());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    searchResponse.OnSuccess(t.toString());
+                }
+            });
+
+        return this;
+    }
 
 
     public interface SearchResponse{
