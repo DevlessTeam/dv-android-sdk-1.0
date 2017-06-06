@@ -385,6 +385,45 @@ Example: lets look into our names table in the new_service service and look for 
         });
 ```
 
+###Ordering By
+```Java
+ String serviceName = "new_service"// Your service_name here
+ String tableName  = "names"//replace with your table name
+ devless.orderBy("id").queryData(serviceName,tableName,new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("==orderBy response all==", response);
+            }
+        });
+```
+
+###OrderBy and Search 
+```Java
+ String serviceName = "new_service"// Your service_name here
+ String tableName  = "names"//replace with your table name
+ devless.orderBy("id").where("name", "finney").queryData(serviceName,tableName,new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("==orderBy response all==", response);
+            }
+        });
+```
+
+###Order , Search and Size
+```Java
+ String serviceName = "new_service"// Your service_name here
+ String tableName  = "names"//replace with your table name
+ devless.orderBy("id")
+        .size(3)
+        .where("name", "finney")
+        .queryData(serviceName,tableName,new Devless.SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("==orderBy response all==", response);
+            }
+        });
+```
+
 # Devless_Android_SDK(dv-android-sdk-1.0)
 This is a working library to add to your android project in order for your app to talk to your delvess backend
 ### Thanks for following this guide. Keep using devless and tell your friends about devless. DevLess is easy and superfast.
