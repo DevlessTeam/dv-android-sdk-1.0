@@ -16,6 +16,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import androidsdk.devless.io.devless.interfaces.LoginResponse;
+import androidsdk.devless.io.devless.interfaces.LogoutResponse;
+import androidsdk.devless.io.devless.interfaces.RequestResponse;
+import androidsdk.devless.io.devless.interfaces.SearchResponse;
+import androidsdk.devless.io.devless.interfaces.SignUpResponse;
 import androidsdk.devless.io.devless.services.APISERVICE;
 import androidsdk.devless.io.devless.services.DELETEAPISERVICE;
 import androidsdk.devless.io.devless.services.PATCHAPISERVICE;
@@ -89,6 +95,7 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                     String result = response.body().string();
                     boolean bool = DevlessBuilder.checkAuth(result);
+                    Log.e("==response form post===",  result);
                     if (bool){
                         requestResponseresponse.OnSuccess(result);
                     }  else{
@@ -121,7 +128,6 @@ public class Devless extends AppCompatActivity implements Serializable{
                 try {
 
                     String result = response.body().string();
-
                     boolean bool = DevlessBuilder.checkAuth(result);
                     if (bool){
                         requestResponseresponse.OnSuccess(result);
@@ -155,7 +161,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                 try {
 
                     String result = response.body().string();
-
+                    Log.e("==delete result==", result);
                     boolean bool = DevlessBuilder.checkAuth(result);
                     if (bool){
                         requestResponse.OnSuccess(result);
@@ -412,25 +418,6 @@ public class Devless extends AppCompatActivity implements Serializable{
     }
 
 
-    public interface RequestResponse {
-        void OnSuccess(String response);
-        void UserNotAuthenticated(String message);
-    }
-
-    public interface LoginResponse {
-        void OnLogInSuccess(String payload);
-        void OnLogInFailed(String error);
-    }
-
-    public interface LogoutResponse {
-        void OnLogOutSuccess(String response);
-
-    }
-
-    public interface SignUpResponse{
-        void OnSignUpSuccess (String payload);
-        void OnSignUpFailed  (String errorMessage);
-    }
 
     public String getDevlessUserToken() {
         return devlessUserToken;
@@ -564,11 +551,6 @@ public class Devless extends AppCompatActivity implements Serializable{
         return this;
     }
 
-
-    public interface SearchResponse{
-        void OnSuccess(String response);
-        void UserNotAuthenticated (String message);
-    }
 
     private List<String> loopJson (JSONObject jsonObject){
         List<String> ele = new ArrayList<>();

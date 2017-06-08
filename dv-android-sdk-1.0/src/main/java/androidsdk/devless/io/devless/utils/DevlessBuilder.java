@@ -126,7 +126,7 @@ public class DevlessBuilder {
         try {
             JSONObject JO = new JSONObject(response);
             int statusCode = JO.getInt("status_code");
-            if (statusCode == 625){
+            if (statusCode == 625 ||  statusCode == 609 || statusCode == 619 ||  statusCode == 636 || statusCode == 614){
                 bool = true;
             }  else if (statusCode == 628 || statusCode == 700){
                 bool = false;
