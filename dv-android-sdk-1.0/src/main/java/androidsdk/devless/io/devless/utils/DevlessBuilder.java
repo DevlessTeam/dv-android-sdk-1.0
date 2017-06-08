@@ -1,5 +1,8 @@
 package androidsdk.devless.io.devless.utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -115,5 +118,25 @@ public class DevlessBuilder {
         signUp.put("id", "1000");
         return  signUp;
 
+    }
+
+    public static boolean checkAuth ( String response){
+
+        boolean bool =  false;
+        try {
+            JSONObject JO = new JSONObject(response);
+            int statusCode = JO.getInt("status_code");
+            if (statusCode == 625){
+                bool = true;
+            }  else if (statusCode == 628 || statusCode == 700){
+                bool = false;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+       return bool;
     }
 }

@@ -1,9 +1,11 @@
 package androidsdk.devless.io.devless.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,9 +54,13 @@ public class Devless extends AppCompatActivity implements Serializable{
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                     requestResponse.OnSuccess(response.body().string());
-
-
+                    String result = response.body().string();
+                    boolean bool = DevlessBuilder.checkAuth(result);
+                    if (bool){
+                        requestResponse.OnSuccess(result);
+                    }  else{
+                        requestResponse.UserNotAuthenticated("Token expired please log in again");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -80,7 +86,14 @@ public class Devless extends AppCompatActivity implements Serializable{
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    requestResponseresponse.OnSuccess(response.body().string());
+
+                    String result = response.body().string();
+                    boolean bool = DevlessBuilder.checkAuth(result);
+                    if (bool){
+                        requestResponseresponse.OnSuccess(result);
+                    }  else{
+                        requestResponseresponse.UserNotAuthenticated("Token expired please log in again");
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -106,7 +119,15 @@ public class Devless extends AppCompatActivity implements Serializable{
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    requestResponseresponse.OnSuccess(response.body().string());
+
+                    String result = response.body().string();
+
+                    boolean bool = DevlessBuilder.checkAuth(result);
+                    if (bool){
+                        requestResponseresponse.OnSuccess(result);
+                    }  else{
+                        requestResponseresponse.UserNotAuthenticated("Token expired please log in again");
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -132,7 +153,15 @@ public class Devless extends AppCompatActivity implements Serializable{
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    requestResponse.OnSuccess(response.body().string());
+
+                    String result = response.body().string();
+
+                    boolean bool = DevlessBuilder.checkAuth(result);
+                    if (bool){
+                        requestResponse.OnSuccess(result);
+                    }  else{
+                        requestResponse.UserNotAuthenticated("Token expired please log in again");
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -157,7 +186,15 @@ public class Devless extends AppCompatActivity implements Serializable{
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    requestResponse.OnSuccess(response.body().string());
+
+                    String result = response.body().string();
+
+                    boolean bool = DevlessBuilder.checkAuth(result);
+                    if (bool){
+                        requestResponse.OnSuccess(result);
+                    }  else{
+                        requestResponse.UserNotAuthenticated("Token expired please log in again");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -200,6 +237,11 @@ public class Devless extends AppCompatActivity implements Serializable{
 
             }
 
+            @Override
+            public void UserNotAuthenticated(String message) {
+                //
+            }
+
         });
 
     }
@@ -233,6 +275,11 @@ public class Devless extends AppCompatActivity implements Serializable{
                     e.printStackTrace();
                 }
 
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                //signUpResponse.OnSignUpFailed(message);
             }
 
         });
@@ -299,6 +346,11 @@ public class Devless extends AppCompatActivity implements Serializable{
                 }
 
             }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                //
+            }
         });
 
     }
@@ -335,6 +387,11 @@ public class Devless extends AppCompatActivity implements Serializable{
                 }
 
             }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+
+            }
         });
 
     }
@@ -346,13 +403,18 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void OnSuccess(String response) {
                 logoutResponse.OnLogOutSuccess(response);
             }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+
+            }
         });
     }
 
 
     public interface RequestResponse {
         void OnSuccess(String response);
-
+        void UserNotAuthenticated(String message);
     }
 
     public interface LoginResponse {
@@ -405,7 +467,15 @@ public class Devless extends AppCompatActivity implements Serializable{
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
-                        searchResponse.OnSuccess(response.body().string());
+                        //searchResponse.OnSuccess(response.body().string());
+                        String result = response.body().string();
+
+                        boolean bool = DevlessBuilder.checkAuth(result);
+                        if (bool){
+                            searchResponse.OnSuccess(result);
+                        }  else{
+                            searchResponse.UserNotAuthenticated("Token expired please log in again");
+                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -427,7 +497,14 @@ public class Devless extends AppCompatActivity implements Serializable{
                         size= -1;
                         where = "";
                         orderBy = "";
-                        searchResponse.OnSuccess(response.body().string());
+                        String result = response.body().string();
+
+                        boolean bool = DevlessBuilder.checkAuth(result);
+                       if (bool){
+                            searchResponse.OnSuccess(result);
+                       }  else{
+                           searchResponse.UserNotAuthenticated("Token expired please log in again");
+                       }
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -462,7 +539,16 @@ public class Devless extends AppCompatActivity implements Serializable{
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
-                        searchResponse.OnSuccess(response.body().string());
+
+                        String result = response.body().string();
+
+                        boolean bool = DevlessBuilder.checkAuth(result);
+                        if (bool){
+                            searchResponse.OnSuccess(result);
+                        }  else{
+                            searchResponse.UserNotAuthenticated("Token expired please log in again");
+                        }
+
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -481,6 +567,7 @@ public class Devless extends AppCompatActivity implements Serializable{
 
     public interface SearchResponse{
         void OnSuccess(String response);
+        void UserNotAuthenticated (String message);
     }
 
     private List<String> loopJson (JSONObject jsonObject){

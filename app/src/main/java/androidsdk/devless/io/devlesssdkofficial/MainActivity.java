@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+/*
         devless.where("name", "finney")
                 .orderBy("id")
                 .size(2)
@@ -60,7 +60,12 @@ public class MainActivity extends AppCompatActivity {
             public void OnSuccess(String response) {
                 Log.e("search response two==", response);
             }
-        });
+
+                    @Override
+                    public void UserNotAuthenticated(String message) {
+                        Log.e("search order by==", message);
+                    }
+                });
 
 
 
@@ -69,12 +74,22 @@ public class MainActivity extends AppCompatActivity {
             public void OnSuccess(String response) {
                 Log.e("search response all==", response);
             }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("search order by==", message);
+            }
         });
 
         devless.orderBy("id").queryData(serviceName,tableName, new Devless.SearchResponse() {
             @Override
             public void OnSuccess(String response) {
                 Log.e("search response all==", response);
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("search order by==", message);
             }
         });
 
@@ -83,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
             public void OnSuccess(String response) {
                 Log.e("search order by==", response);
             }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("search order by==", message);
+            }
         });
 
         devless.orderBy("devless_user_id").queryOrderedData(serviceName, tableName, new Devless.SearchResponse() {
@@ -90,10 +110,15 @@ public class MainActivity extends AppCompatActivity {
             public void OnSuccess(String response) {
                 Log.e("search order by==", response);
             }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("search order by==", message);
+            }
         });
 
 
-
+    */
 
         /*
         devless.getData(serviceName, tableName, new Devless.RequestResponse() {
@@ -201,6 +226,19 @@ public class MainActivity extends AppCompatActivity {
 //                Log.e("UsernamePassLoginSucc", error);
 //            }
 //        });
+
+        devless.getData(serviceName, tableName, new Devless.RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Query response", response);
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("Query response", message);
+            }
+        });
+
 
 
 
