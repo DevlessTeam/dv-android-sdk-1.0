@@ -217,84 +217,86 @@ public class MainActivity extends AppCompatActivity {
             }
         })
         */
-//
-//        devless.loginWithUsernameAndPassword("mikko", "password", sp, new LoginResponse() {
-//            @Override
-//            public void OnLogInSuccess(String payload) {
-//                Log.e("UsernamePassLogInSucc", payload);
-//            }
-//
-//            @Override
-//            public void OnLogInFailed(String error) {
-//                Log.e("UsernamePassLoginSucc", error);
-//            }
-//        });
 
-//        devless.getData(serviceName, tableName, new RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("Query response", response);
-//            }
-//
-//            @Override
-//            public void UserNotAuthenticated(String message) {
-//                Log.e("Query response", message);
-//            }
-//        });
+        /*
 
-//        devless.postData(serviceName, tableName, params, new RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("Messge", response);
-//            }
-//
-//            @Override
-//            public void UserNotAuthenticated(String message) {
-//                Log.e("Message", message);
-//            }
-//        });
+        devless.loginWithUsernameAndPassword("mikko", "password", sp, new LoginResponse() {
+            @Override
+            public void OnLogInSuccess(String payload) {
+                Log.e("UsernamePassLogInSucc", payload);
+            }
 
+            @Override
+            public void OnLogInFailed(String error) {
+                Log.e("UsernamePassLoginSucc", error);
+            }
+        });
 
-//        devless.logout(new LogoutResponse() {
-//            @Override
-//            public void OnLogOutSuccess(String response) {
-//                Log.e("log out resp", response);
-//            }
-//        });
+        devless.getData(serviceName, tableName, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Query response", response);
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("Query response", message);
+            }
+        });
+
+        devless.postData(serviceName, tableName, params, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Messge", response);
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("Message", message);
+            }
+        });
 
 
-
-//        devless.edit(serviceName, tableName, params, "24", new RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("Edit response", response);
-//            }
-//
-//            @Override
-//            public void UserNotAuthenticated(String message) {
-//                Log.e("No Auth", message);
-//            }
-//        });
+        devless.logout(new LogoutResponse() {
+            @Override
+            public void OnLogOutSuccess(String response) {
+                Log.e("log out resp", response);
+            }
+        });
 
 
-//        devless.delete(serviceName, tableName, "25", new RequestResponse() {
-//            @Override
-//            public void OnSuccess(String response) {
-//                Log.e("Delete25", response);
-//            }
-//
-//            @Override
-//            public void UserNotAuthenticated(String message) {
-//                Log.e("Delete25AuthFailed", message);
-//            }
-//        });
 
-//
+        devless.edit(serviceName, tableName, params, "24", new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Edit response", response);
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("No Auth", message);
+            }
+        });
+
+
+        devless.delete(serviceName, tableName, "25", new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Delete25", response);
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("Delete25AuthFailed", message);
+            }
+        });
+
+
    }
 
+ */
 
-
-
+    }
 
 
 }
