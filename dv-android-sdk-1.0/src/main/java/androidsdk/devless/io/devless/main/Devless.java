@@ -61,6 +61,8 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String result = response.body().string();
+
+                    Log.e("==Grest==", result);
                     boolean bool = DevlessBuilder.checkAuth(result);
                     if (bool){
                         requestResponse.OnSuccess(result);

@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
 
-        String appUrl = "http://afterpush.herokuapp.com";
-        String serviceName = "new_service";
-        String devlessToken = "f9372bad91503a3d4da8824ef6e9ebe6";
-        String tableName = "names";
+        String appUrl = "http://easead.herokuapp.com";
+        String serviceName = "custom_json";
+        String devlessToken = "0f14af651033d54856cac541e7624b1a";
+        String tableName = "logic";
 
         Map<String, Object> params = new HashMap<>();
         params.put("name", "finney");
@@ -295,6 +295,31 @@ public class MainActivity extends AppCompatActivity {
    }
 
  */
+
+//        devless.loginWithEmailAndPassword("eben@mest.com", "password", sp, new LoginResponse() {
+//            @Override
+//            public void OnLogInSuccess(String payload) {
+//                Log.e("UsernamePassLogInSucc", payload);
+//            }
+//
+//            @Override
+//            public void OnLogInFailed(String error) {
+//                Log.e("UsernamePassLoginSucc", error);
+//            }
+//        });
+
+
+        devless.getData(serviceName, tableName, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("Response", response);
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("Query response", message);
+            }
+        });
 
     }
 
