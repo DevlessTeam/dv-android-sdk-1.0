@@ -424,6 +424,41 @@ Example: lets look into our names table in the new_service service and look for 
         });
 ```
 
+### Querying / Searching With Params
+```Java
+    //Create a hashmap of all the params you will need for your query eg, orderBy, id etc
+    Map<String, Object> params = new HashMap<>();
+    
+    //add all your params this way
+    params.put( "size", 2);
+    params.put( "offset", 2);
+    params.put( "orderBy", "id");
+    params.put( "where",   "id,2");
+    params.put( "search", "name,koobi");
+    params.put( "orWhere", "id,3");
+    params.put( "between", "id,1,2");
+    params.put( "greaterThan", "id,1");
+    params.put( "lessThanEqual", "id,2");
+    params.put( "where", "name,koobi");
+    
+    //you can now call on the search method and search and get your response
+    
+    devless.search(serviceName, tableName, params, new SearchResponse() {
+                @Override
+                public void OnSuccess(String response) {
+                    Log.e("==Success==", response);
+                }
+    
+                @Override
+                public void UserNotAuthenticated(String message) {
+                    Log.e("==UserNotAuthenticated==", message);
+                }
+            });
+    
+```
+
+
+
 # Devless_Android_SDK(dv-android-sdk-1.0)
 This is a working library to add to your android project in order for your app to talk to your delvess backend
 ### Thanks for following this guide. Keep using devless and tell your friends about devless. DevLess is easy and superfast.

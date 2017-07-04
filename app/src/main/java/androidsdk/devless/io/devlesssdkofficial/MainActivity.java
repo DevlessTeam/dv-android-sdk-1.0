@@ -379,16 +379,16 @@ public class MainActivity extends AppCompatActivity {
 
         // create a hashmap of params you want to search by this way
         Map<String, Object> prams = new HashMap<>();
-        //prams.put( "size", 2);
-        //prams.put( "offset", 2);
+        prams.put( "size", 2);
+        prams.put( "offset", 2);
         prams.put( "orderBy", "id");
-        //prams.put( "where",   "id,2");
-        // prams.put( "search", "name,koobi");
-        //prams.put( "orWhere", "id,3");
-        //prams.put( "between", "id,1,2");
-        //prams.put( "greaterThan", "id,1");
-        //prams.put( "lessThanEqual", "id,2");
-        //prams.put( "where", "name,koobi");
+        prams.put( "where",   "id,2");
+         prams.put( "search", "name,koobi");
+        prams.put( "orWhere", "id,3");
+        prams.put( "between", "id,1,2");
+        prams.put( "greaterThan", "id,1");
+        prams.put( "lessThanEqual", "id,2");
+        prams.put( "where", "name,koobi");
 
         //set the query params
         //devless.setParams(prams);
