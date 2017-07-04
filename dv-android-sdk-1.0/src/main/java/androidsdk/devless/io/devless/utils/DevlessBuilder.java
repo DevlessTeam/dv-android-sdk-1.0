@@ -128,7 +128,7 @@ public class DevlessBuilder {
             int statusCode = JO.getInt("status_code");
             if (statusCode == 625 ||  statusCode == 609 || statusCode == 619 ||  statusCode == 636 || statusCode == 614 || statusCode == 1000){
                 bool = true;
-            }  else if (statusCode == 628 || statusCode == 700){
+            }  else if (statusCode == 628){
                 bool = false;
             } else {
                 bool = true;
@@ -140,5 +140,47 @@ public class DevlessBuilder {
 
 
        return bool;
+    }
+
+    public static boolean checkGetSuccess(String response){
+       boolean bool = false;
+        try {
+            JSONObject JO = new JSONObject(response);
+            int statusCode = JO.getInt("status_code");
+            if (statusCode == 634 ||  statusCode == 604 ) {
+                bool = false;
+            }else{
+                bool = true;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return bool;
+
+    }
+
+    public static int checkPostSuccess(String response){
+        int bool = 0;
+        try {
+            JSONObject JO = new JSONObject(response);
+            int statusCode = JO.getInt("status_code");
+            if (statusCode == 634 ||  statusCode == 604 ) {
+                bool = -1;
+            }else if (statusCode == 700){
+                bool = 0;
+            }else if (statusCode == 629 || statusCode == 614){
+                bool = 2;
+            } else {
+                bool = 1;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return bool;
+
     }
 }

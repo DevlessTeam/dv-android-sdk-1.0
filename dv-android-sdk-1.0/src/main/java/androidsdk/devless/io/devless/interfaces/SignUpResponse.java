@@ -1,10 +1,13 @@
 package androidsdk.devless.io.devless.interfaces;
 
+import androidsdk.devless.io.devless.messages.ErrorMessage;
+import androidsdk.devless.io.devless.messages.Payload;
+
 /**
  * Created by pianoafrik on 6/8/17.
  */
 
 public interface SignUpResponse {
-    void OnSignUpSuccess (String payload);
-    void OnSignUpFailed  (String errorMessage);
+    void OnSignUpSuccess (Payload payload);
+    void OnSignUpFailed  (ErrorMessage errorMessage);
 }

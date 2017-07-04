@@ -1,10 +1,13 @@
 package androidsdk.devless.io.devless.interfaces;
 
+import androidsdk.devless.io.devless.messages.ErrorMessage;
+import androidsdk.devless.io.devless.messages.ResponsePayload;
+
 /**
  * Created by pianoafrik on 6/8/17.
  */
 
 public interface SearchResponse {
-    void OnSuccess(String response);
-    void UserNotAuthenticated (String message);
+    void OnSuccess(ResponsePayload response);
+    void UserNotAuthenticated (ErrorMessage errorMessage);
 }

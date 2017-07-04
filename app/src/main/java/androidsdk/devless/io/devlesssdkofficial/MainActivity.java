@@ -1,28 +1,22 @@
 package androidsdk.devless.io.devlesssdkofficial;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import androidsdk.devless.io.devless.interfaces.LoginResponse;
-import androidsdk.devless.io.devless.interfaces.LogoutResponse;
+import androidsdk.devless.io.devless.interfaces.DeleteResponse;
+import androidsdk.devless.io.devless.interfaces.EditDataResponse;
+import androidsdk.devless.io.devless.interfaces.GetDataResponse;
+import androidsdk.devless.io.devless.interfaces.PostDataResponse;
 import androidsdk.devless.io.devless.interfaces.RequestResponse;
-import androidsdk.devless.io.devless.interfaces.SearchResponse;
-import androidsdk.devless.io.devless.interfaces.SignUpResponse;
 import androidsdk.devless.io.devless.main.Devless;
+import androidsdk.devless.io.devless.messages.ErrorMessage;
+import androidsdk.devless.io.devless.messages.ResponsePayload;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -381,14 +375,14 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> prams = new HashMap<>();
         prams.put( "size", 2);
         prams.put( "offset", 2);
-        prams.put( "orderBy", "id");
-        prams.put( "where",   "id,2");
-         prams.put( "search", "name,koobi");
-        prams.put( "orWhere", "id,3");
-        prams.put( "between", "id,1,2");
-        prams.put( "greaterThan", "id,1");
-        prams.put( "lessThanEqual", "id,2");
-        prams.put( "where", "name,koobi");
+//        prams.put( "orderBy", "id");
+//        prams.put( "where",   "id,2");
+//         prams.put( "search", "name,koobi");
+//        prams.put( "orWhere", "id,3");
+//        prams.put( "between", "id,1,2");
+//        prams.put( "greaterThan", "id,1");
+//        prams.put( "lessThanEqual", "id,2");
+//        prams.put( "where", "name,koobi");
 
         //set the query params
         //devless.setParams(prams);
@@ -399,73 +393,132 @@ public class MainActivity extends AppCompatActivity {
         //prams.put( "orderBy", "id");
 
 
-        // code to form url
-//        String rootUrl = "http://devlesssdktest.herokuapp.com";
-//        String urlOne = rootUrl + "/api/v1/service/serviceName/db?table=tableName";
-//        String paramUrl = "";
-//        for (Map.Entry<String, Object> entry : devless.getParams().entrySet()) {
-//            paramUrl += "&" + entry.getKey() + "=" + entry.getValue().toString();
-//        }
-//        String fullUrl = urlOne + paramUrl;
-//        Log.e("==pramaUrl==", paramUrl);
-//        Log.e("==fullUrl==", fullUrl);
 
-//        devless.loginWithUsernameAndPassword("charles", "password", sp, new LoginResponse() {
-//            @Override
-//            public void OnLogInSuccess(String payload) {
-//
-//            }
-//
-//            @Override
-//            public void OnLogInFailed(String error) {
-//
-//            }
-//        });
 
-//TODO:Params
 
-        /*
-
-        devless.search(serviceName, tableName, prams, new SearchResponse() {
+        //getData
+        devless.getData(serviceName, tableName, new GetDataResponse() {
             @Override
-            public void OnSuccess(String response) {
-                Log.e("==Success==", response);
+            public void OnSuccess(ResponsePayload response) {
+                Log.e("GetDataSuccessResponse", response.toString());
             }
 
             @Override
-            public void UserNotAuthenticated(String message) {
-                Log.e("==Failure==", message);
+            public void OnFailed(ErrorMessage errorMessage) {
+                Log.e("GetDataFailedResponse", errorMessage.toString());
+            }
+
+            @Override
+            public void UserNotAuthenticated(ErrorMessage message) {
+                Log.e("UserNotAuthError", message.toString());
             }
         });
 
 
-        devless.search(serviceName, tableName, paramsTwo, new SearchResponse() {
+
+
+
+
+
+
+        //PostData
+        //hashMap
+        /*
+        Map<String, Object> data = new HashMap<>();
+        data.put("name", "richard");
+
+        devless.postData(serviceName, tableName, data, new PostDataResponse() {
             @Override
-            public void OnSuccess(String response) {
-                Log.e("==SuccessTwo==", response);
+            public void OnSuccess(ResponsePayload response) {
+                Log.e("PostDataSuccessResponse", response.toString());
             }
 
             @Override
-            public void UserNotAuthenticated(String message) {
-                Log.e("==SuccessTwo==", message);
+            public void OnFailed(ErrorMessage errorMessage) {
+                Log.e("PostDataFailedResponse", errorMessage.toString());
+            }
+
+            @Override
+            public void UserNotAuthenticated(ErrorMessage message) {
+                Log.e("UserNotAuthResponse", message.toString());
             }
         });
         */
 
 
-        devlessEc2.signUpWithEmailAndPassword("lolo@gmail.com", "password", sp, new SignUpResponse() {
+        /*
+
+        //Search devless
+
+        devless.search(serviceName, tableName, prams, new SearchResponse() {
             @Override
-            public void OnSignUpSuccess(String payload) {
-                Log.e("==Success==", payload);
-                //616
+            public void OnSuccess(ResponsePayload response) {
+                Log.e("SearchResponse", response.toString());
             }
 
             @Override
-            public void OnSignUpFailed(String errorMessage) {
-                Log.e("==Failure==", errorMessage);
+            public void UserNotAuthenticated(ErrorMessage errorMessage) {
+                Log.e("SearchResponse", errorMessage.toString());
             }
         });
 
+        devless.search(serviceName, tableName, paramsTwo, new SearchResponse() {
+            @Override
+            public void OnSuccess(ResponsePayload response) {
+                Log.e("SearchResponse", response.toString());
+            }
+
+            @Override
+            public void UserNotAuthenticated(ErrorMessage errorMessage) {
+                Log.e("SearchResponse", errorMessage.toString());
+            }
+        });
+
+        */
+
+
+        /* Edit papapaa
+
+        Map<String, Object> patch = new HashMap<>();
+        patch.put("name", "KofiNie");
+
+        devless.edit(serviceName, tableName, patch, "1", new EditDataResponse() {
+            @Override
+            public void OnSuccess(ResponsePayload response) {
+                Log.e("EditDataSuccessResponse", response.toString());
+            }
+
+            @Override
+            public void OnFailed(ErrorMessage errorMessage) {
+                Log.e("EditDataFailedResponse", errorMessage.toString());
+            }
+
+            @Override
+            public void UserNotAuthenticated(ErrorMessage message) {
+                Log.e("UserNotAuth", message.toString());
+            }
+        });
+        */
+
+    /*
+        devless.delete(serviceName, tableName, "1", new DeleteResponse() {
+            @Override
+            public void OnSuccess(ResponsePayload response) {
+                Log.e("DeleteDataSuccess", response.toString());
+            }
+
+            @Override
+            public void OnFailed(ErrorMessage errorMessage) {
+                Log.e("DeleteDataSFailed", errorMessage.toString());
+            }
+
+            @Override
+            public void UserNotAuthenticated(ErrorMessage message) {
+                Log.e("UserNotAuth", message.toString());
+            }
+        });
+
+        */
     }
 
 
