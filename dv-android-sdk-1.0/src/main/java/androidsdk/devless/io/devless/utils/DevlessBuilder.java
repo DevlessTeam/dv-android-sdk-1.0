@@ -130,6 +130,8 @@ public class DevlessBuilder {
                 bool = true;
             }  else if (statusCode == 628 || statusCode == 700){
                 bool = false;
+            } else {
+                bool = true;
             }
 
         } catch (JSONException e) {

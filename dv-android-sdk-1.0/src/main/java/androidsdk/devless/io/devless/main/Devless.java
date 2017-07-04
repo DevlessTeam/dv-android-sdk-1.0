@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -224,6 +225,48 @@ public class Devless extends AppCompatActivity implements Serializable{
         methodCall("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
             @Override
             public void OnSuccess(String response) {
+                Log.e("rewsp", response);
+                try {
+                    JSONObject JO = new JSONObject(response);
+                    String payload = JO.getString("payload");
+                    JSONObject payloadObject = new JSONObject(payload);
+                    String result = payloadObject.getString("result");
+                    JSONObject resultObject = new JSONObject(result);
+                    if(resultObject.length() ==  2){
+                        signUpResponse.OnSignUpSuccess(payload);
+                        String token  =  resultObject.getString("token");
+                        editor.putString("devlessUserToken", token);
+                        editor.commit();
+                    } else if (resultObject.length() == 3) {
+                        signUpResponse.OnSignUpFailed("Seems Email already exists");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("rewsp", e.toString());
+                }
+
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                //
+            }
+
+        });
+
+    }
+
+    public void signUpWithPhoneNumberAndPassword(String phoneNumber, final String password, final SharedPreferences sp, final SignUpResponse signUpResponse) {
+        final SharedPreferences.Editor editor = sp.edit();
+        List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
+                "", password, "", phoneNumber, "", "", ""
+        ));
+
+        methodCall("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+
                 try {
                     JSONObject JO = new JSONObject(response);
                     String payload = JO.getString("payload");
@@ -404,6 +447,47 @@ public class Devless extends AppCompatActivity implements Serializable{
 
     }
 
+    public void loginWithPhoneNumberAndPassword(String phoneNumber, final String password, final SharedPreferences sp, final LoginResponse loginResponse){
+        final SharedPreferences.Editor editor = sp.edit();
+        List<String> loginParams  = new ArrayList<>(Arrays.asList(
+                "",
+                "",
+                phoneNumber,
+                password
+        ));
+        methodCall("devless", "login", loginParams, new RequestResponse() {
+            @Override
+            public void OnSuccess(String response) {
+
+                try {
+                    JSONObject jO = new JSONObject(response);
+                    String payload = jO.getString("payload");
+                    JSONObject payloadObject = new JSONObject(payload);
+                    String resultValue = loopJson(payloadObject).get(1);
+                    if(!resultValue.equalsIgnoreCase("false")){
+                        String result = payloadObject.getString("result");
+                        JSONObject payloadReturnedObject = new JSONObject(result);
+                        String token = payloadReturnedObject.getString("token");
+                        editor.putString("devlessUserToken", token);
+                        editor.commit();
+                        loginResponse.OnLogInSuccess(result);
+                    } else {
+                        loginResponse.OnLogInFailed("Wrong PhoneNumber or Password");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                //
+            }
+        });
+
+    }
+
     public void logout(final LogoutResponse logoutResponse){
         final List<String> logOutParams  = new ArrayList<>();
         methodCall("devless", "logout", logOutParams, new RequestResponse() {
@@ -552,6 +636,54 @@ public class Devless extends AppCompatActivity implements Serializable{
 
         return this;
     }
+
+    public  void search(String serviceName, final String tableName, final Map<String, Object> queryParams, final SearchResponse searchResponse){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        final APISERVICE service = retrofit.create(APISERVICE.class);
+
+        String paramUrl = "";
+        for (Map.Entry<String, Object> entry : queryParams.entrySet()) {
+            paramUrl += "&" + entry.getKey() + "=" + entry.getValue().toString();
+        }
+
+        final Call<ResponseBody> result = service.getCalls("db?table=" + tableName + paramUrl, token, devlessUserToken);
+        result.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+
+                    String result = response.body().string();
+
+                    boolean bool = DevlessBuilder.checkAuth(result);
+                    if (bool){
+                        searchResponse.OnSuccess(result);
+                        queryParams.clear();
+
+                    }  else{
+                        searchResponse.UserNotAuthenticated("Token expired please log in again");
+                        //searchResponse.UserNotAuthenticated(result);
+                        queryParams.clear();
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    queryParams.clear();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                searchResponse.OnSuccess(t.toString());
+                queryParams .clear();
+            }
+        });
+
+    }
+
 
 
     private List<String> loopJson (JSONObject jsonObject){

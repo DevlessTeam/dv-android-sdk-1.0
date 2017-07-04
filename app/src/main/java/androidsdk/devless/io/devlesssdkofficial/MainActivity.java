@@ -20,6 +20,8 @@ import java.util.Map;
 import androidsdk.devless.io.devless.interfaces.LoginResponse;
 import androidsdk.devless.io.devless.interfaces.LogoutResponse;
 import androidsdk.devless.io.devless.interfaces.RequestResponse;
+import androidsdk.devless.io.devless.interfaces.SearchResponse;
+import androidsdk.devless.io.devless.interfaces.SignUpResponse;
 import androidsdk.devless.io.devless.main.Devless;
 
 
@@ -36,21 +38,38 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
 
-        String appUrl = "http://easead.herokuapp.com";
-        String serviceName = "custom_json";
-        String devlessToken = "0f14af651033d54856cac541e7624b1a";
-        String tableName = "logic";
+        String appUrl = "http://devlesssdktest.herokuapp.com";
+        String localUrl = "http://10.0.2.2:4545";
+        String ec2Url  = "http://34.228.145.55:4545";
+        String serviceName = "temp";
+        String devlessToken = "daa847c6b5692635acb8feb45562e4dd";
+        String localToken  = "8217910aed62a383f5e599b640808896";
+        String ec2Toke  = "52a5f8535a486209e87afe3cb7389a52";
+        String tableName = "tester";
 
         Map<String, Object> params = new HashMap<>();
         params.put("name", "finney");
         params.put("stage", 0);
 
         Devless devless = new Devless(this, appUrl, devlessToken);
-
-
+        Devless devless1 = new Devless(this, localUrl, localToken);
+        Devless devlessEc2 = new Devless(this, ec2Url, ec2Toke);
         devless.addUserToken(sp);
 
-        Log.e("token", devless.getDevlessUserToken());
+        Log.e("User token", devless.getDevlessUserToken());
+
+
+//        devless.signUpWithEmailAndPassword("marko@gmail", "password", sp, new SignUpResponse() {
+//            @Override
+//            public void OnSignUpSuccess(String payload) {
+//                Log.e("===wins===", payload);
+//            }
+//
+//            @Override
+//            public void OnSignUpFailed(String errorMessage) {
+//                Log.e("===error===", errorMessage);
+//            }
+//        });
 
 
 
@@ -309,15 +328,141 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-        devless.getData(serviceName, tableName, new RequestResponse() {
+//        devless.getData(serviceName, tableName, new RequestResponse() {
+//            @Override
+//            public void OnSuccess(String response) {
+//                Log.e("Response", response);
+//            }
+//
+//            @Override
+//            public void UserNotAuthenticated(String message) {
+//                Log.e("Query response", message);
+//            }
+//        });
+
+//        devless.signUpWithEmailAndPassword("meko@gmail.com", "password", sp, new SignUpResponse() {
+//            @Override
+//            public void OnSignUpSuccess(String payload) {
+//                Log.e("===Noko==", payload);
+//            }
+//
+//            @Override
+//            public void OnSignUpFailed(String errorMessage) {
+//                Log.e("===Nokos==", errorMessage);
+//            }
+//        });
+
+//        devless.getData(serviceName, tableName, new RequestResponse() {
+//            @Override
+//            public void OnSuccess(String response) {
+//                Log.e("Response", response);
+//            }
+//
+//            @Override
+//            public void UserNotAuthenticated(String message) {
+//                Log.e("Query response", message);
+//            }
+//        });
+
+//        devless.signUpWithUsernameAndPassword("charles", "password", sp, new SignUpResponse() {
+//            @Override
+//            public void OnSignUpSuccess(String payload) {
+//                Log.e("Response", payload);
+//            }
+//
+//            @Override
+//            public void OnSignUpFailed(String errorMessage) {
+//                Log.e("Response", errorMessage);
+//            }
+//        });
+
+
+        // create a hashmap of params you want to search by this way
+        Map<String, Object> prams = new HashMap<>();
+        //prams.put( "size", 2);
+        //prams.put( "offset", 2);
+        prams.put( "orderBy", "id");
+        //prams.put( "where",   "id,2");
+        // prams.put( "search", "name,koobi");
+        //prams.put( "orWhere", "id,3");
+        //prams.put( "between", "id,1,2");
+        //prams.put( "greaterThan", "id,1");
+        //prams.put( "lessThanEqual", "id,2");
+        //prams.put( "where", "name,koobi");
+
+        //set the query params
+        //devless.setParams(prams);
+
+        Map<String, Object> paramsTwo = new HashMap<>();
+        paramsTwo.put( "size",   1);
+        //prams.put( "offset", 2);
+        //prams.put( "orderBy", "id");
+
+
+        // code to form url
+//        String rootUrl = "http://devlesssdktest.herokuapp.com";
+//        String urlOne = rootUrl + "/api/v1/service/serviceName/db?table=tableName";
+//        String paramUrl = "";
+//        for (Map.Entry<String, Object> entry : devless.getParams().entrySet()) {
+//            paramUrl += "&" + entry.getKey() + "=" + entry.getValue().toString();
+//        }
+//        String fullUrl = urlOne + paramUrl;
+//        Log.e("==pramaUrl==", paramUrl);
+//        Log.e("==fullUrl==", fullUrl);
+
+//        devless.loginWithUsernameAndPassword("charles", "password", sp, new LoginResponse() {
+//            @Override
+//            public void OnLogInSuccess(String payload) {
+//
+//            }
+//
+//            @Override
+//            public void OnLogInFailed(String error) {
+//
+//            }
+//        });
+
+//TODO:Params
+
+        /*
+
+        devless.search(serviceName, tableName, prams, new SearchResponse() {
             @Override
             public void OnSuccess(String response) {
-                Log.e("Response", response);
+                Log.e("==Success==", response);
             }
 
             @Override
             public void UserNotAuthenticated(String message) {
-                Log.e("Query response", message);
+                Log.e("==Failure==", message);
+            }
+        });
+
+
+        devless.search(serviceName, tableName, paramsTwo, new SearchResponse() {
+            @Override
+            public void OnSuccess(String response) {
+                Log.e("==SuccessTwo==", response);
+            }
+
+            @Override
+            public void UserNotAuthenticated(String message) {
+                Log.e("==SuccessTwo==", message);
+            }
+        });
+        */
+
+
+        devlessEc2.signUpWithEmailAndPassword("lolo@gmail.com", "password", sp, new SignUpResponse() {
+            @Override
+            public void OnSignUpSuccess(String payload) {
+                Log.e("==Success==", payload);
+                //616
+            }
+
+            @Override
+            public void OnSignUpFailed(String errorMessage) {
+                Log.e("==Failure==", errorMessage);
             }
         });
 
