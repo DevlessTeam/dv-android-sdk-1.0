@@ -14,8 +14,10 @@ import androidsdk.devless.io.devless.interfaces.EditDataResponse;
 import androidsdk.devless.io.devless.interfaces.GetDataResponse;
 import androidsdk.devless.io.devless.interfaces.PostDataResponse;
 import androidsdk.devless.io.devless.interfaces.RequestResponse;
+import androidsdk.devless.io.devless.interfaces.SignUpResponse;
 import androidsdk.devless.io.devless.main.Devless;
 import androidsdk.devless.io.devless.messages.ErrorMessage;
+import androidsdk.devless.io.devless.messages.Payload;
 import androidsdk.devless.io.devless.messages.ResponsePayload;
 
 
@@ -519,6 +521,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         */
+
+
+        devless.signUpWithEmailAndPassword("charlesOne@gmail.com", "password", sp, new SignUpResponse() {
+            @Override
+            public void OnSignUpSuccess(Payload payload) {
+                Log.e("marko", payload.toString());
+            }
+
+            @Override
+            public void OnSignUpFailed(ErrorMessage errorMessage) {
+                Log.e("missed", errorMessage.toString());
+            }
+        });
     }
 
 

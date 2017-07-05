@@ -283,6 +283,7 @@ public class Devless extends AppCompatActivity implements Serializable{
         methodCall("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
             @Override
             public void OnSuccess(ResponsePayload response) {
+                Log.e("response", response.toString());
                 try {
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
