@@ -44,7 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Devless extends AppCompatActivity implements Serializable{
 
     Context mContext;
-    private String rootUrl, token, devlessUserToken="", where = "", orderBy="id";
+    private String rootUrl, token, devlessUserToken="", where = "", orderBy="id", empty;
     private int size = -1 ;
 
 
@@ -283,7 +283,7 @@ public class Devless extends AppCompatActivity implements Serializable{
         methodCall("devless", "signUp", signUpEmailANdPasswordDetails, new RequestResponse() {
             @Override
             public void OnSuccess(ResponsePayload response) {
-                Log.e("response", response.toString());
+
                 try {
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
@@ -303,7 +303,11 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("rewsp", e.toString());
+                    ErrorMessage errorMessage = new ErrorMessage("Seems Email already exists");
+                    signUpResponse.OnSignUpFailed(errorMessage);
+
+
+
                 }
 
             }
@@ -328,6 +332,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void OnSuccess(ResponsePayload response) {
 
                 try {
+//                    Log.e("reponder", response.toString());
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
@@ -346,6 +351,8 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    ErrorMessage errorMessage = new ErrorMessage("Seems PhoneNumber already exists");
+                    signUpResponse.OnSignUpFailed(errorMessage);
                 }
 
             }
@@ -370,6 +377,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void OnSuccess(ResponsePayload response) {
 
                 try {
+                    Log.e("oooo", response.toString());
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
@@ -388,6 +396,7 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    signUpResponse.OnSignUpFailed(new ErrorMessage ("User already exists"));
                 }
 
             }
