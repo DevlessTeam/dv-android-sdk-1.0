@@ -8,6 +8,6 @@ import androidsdk.devless.io.devless.messages.Payload;
  */
 
 public interface SignUpResponse {
-    void OnSignUpSuccess (Payload payload);
-    void OnSignUpFailed  (ErrorMessage errorMessage);
+    void onSignUpSuccess(Payload payload);
+    void onSignUpFailed(ErrorMessage errorMessage);
 }

@@ -9,8 +9,8 @@ import androidsdk.devless.io.devless.messages.ResponsePayload;
 
 public interface DeleteResponse {
 
-    void OnSuccess(ResponsePayload response);
-    void OnFailed (ErrorMessage errorMessage);
-    void UserNotAuthenticated(ErrorMessage message);
+    void onSuccess(ResponsePayload response);
+    void onFailed(ErrorMessage errorMessage);
+    void userNotAuthenticated(ErrorMessage message);
 
 }

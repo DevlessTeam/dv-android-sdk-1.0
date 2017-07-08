@@ -7,5 +7,5 @@ import androidsdk.devless.io.devless.messages.ResponsePayload;
  */
 
 public interface LogoutResponse {
-    void OnLogOutSuccess(ResponsePayload response);
+    void onLogOutSuccess(ResponsePayload response);
 }

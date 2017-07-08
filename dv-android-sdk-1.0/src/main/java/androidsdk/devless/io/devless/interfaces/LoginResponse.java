@@ -8,6 +8,6 @@ import androidsdk.devless.io.devless.messages.ResponsePayload;
  */
 
 public interface LoginResponse {
-    void OnLogInSuccess(ResponsePayload response);
-    void OnLogInFailed (ErrorMessage errorMessage);
+    void onLogInSuccess(ResponsePayload response);
+    void onLogInFailed(ErrorMessage errorMessage);
 }

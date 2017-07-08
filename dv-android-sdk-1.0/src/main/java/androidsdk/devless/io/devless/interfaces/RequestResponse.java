@@ -8,6 +8,6 @@ import androidsdk.devless.io.devless.messages.ResponsePayload;
  */
 
 public interface RequestResponse {
-    void OnSuccess(ResponsePayload response);
-    void UserNotAuthenticated(ErrorMessage message);
+    void onSuccess(ResponsePayload response);
+    void userNotAuthenticated(ErrorMessage message);
 }
