@@ -2,6 +2,8 @@
 
 # Devless_Android_SDK(dv-android-sdk-1.0)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7b3ca66eec8045158528d57a29ed37ad)](https://www.codacy.com/app/charlesagyemang/dv-android-sdk-1.0?utm_source=github.com&utm_medium=referral&utm_content=DevlessTeam/dv-android-sdk-1.0&utm_campaign=badger)
+
 ## SETUP
 #### Step One
 Download the the 'dv-android-sdk-1.0.aar' file [here](https://github.com/DevlessTeam/dv-android-sdk-1.0/blob/master/dv-android-sdk-1.0/src/dv-android-sdk-1.0.aar?raw=true) and save it on your pc or mac
