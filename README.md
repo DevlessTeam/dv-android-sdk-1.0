@@ -6,7 +6,7 @@
 ## SETUP
 #### Step One
 Add the JitPack repository to your build file if it does not already exist
-Add it in your root build.gradle at the end of repositories:
+Add it in your root build.gradle (Project: project_name) at the end of repositories:
 ```Java
   allprojects {
     repositories {
@@ -17,7 +17,7 @@ Add it in your root build.gradle at the end of repositories:
 ```
 
 #### Step two
-Add the dependency
+Add the dependency to your build.gradle(Module: app)
 ```Java
   dependencies {
         compile 'com.github.blackmann:dv-android-sdk-1.0:1.0.1'
