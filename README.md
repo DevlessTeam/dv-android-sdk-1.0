@@ -5,12 +5,13 @@
 
 ## SETUP
 #### Step One
+Add the JitPack repository to your build file if it does not already exist
 Add it in your root build.gradle at the end of repositories:
 ```Java
   allprojects {
-  		repositories {
-  			...
-  			maven { url 'https://jitpack.io' }
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
   		}
   	}
 ```
@@ -19,7 +20,7 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency
 ```Java
   dependencies {
-  	        compile 'com.github.blackmann:dv-android-sdk-1.0:1.0.1'
+        compile 'com.github.blackmann:dv-android-sdk-1.0:1.0.1'
   	}
 ```
 
