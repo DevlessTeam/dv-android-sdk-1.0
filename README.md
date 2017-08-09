@@ -5,27 +5,22 @@
 
 ## SETUP
 #### Step One
-Download the the 'dv-android-sdk-1.0.aar' file [here](https://github.com/DevlessTeam/dv-android-sdk-1.0/blob/master/dv-android-sdk-1.0/src/dv-android-sdk-1.0.aar?raw=true) and save it on your pc or mac
-
+Add it in your root build.gradle at the end of repositories:
+```Java
+  allprojects {
+  		repositories {
+  			...
+  			maven { url 'https://jitpack.io' }
+  		}
+  	}
+```
 
 #### Step two
-Open your project that already exists or create a new project on ***Android Studio** and click on ***file*** a drop down will appear. Hover on ***new*** move to the the drop down on the right and select ***New Module...***
-
-You should see a wizard, select the option that says ***Import .JAR/.AAR Package***  and click on next
-
- You should now have two input fields select the icon on the far right of the first input filed and navigate to where you saved the 'dv-android-sdk-1.0.aar' you downloaded earlier, select it and click next. Wait for it to sync and build and complete.
-
-
-#### Step Three
-- Go to your app build gradle and add the code below there.
-- Click on sync.
-- Wait till its done.
+Add the dependency
 ```Java
-  //dv-android-sdk-1.0 Dependencies
-  compile 'com.squareup.okhttp3:okhttp:3.4.1'
-  compile 'com.squareup.retrofit2:retrofit:2.0.0'
-  compile 'com.squareup.retrofit2:converter-gson:2.0.0'
-  compile project(':dv-android-sdk-1.0')
+  dependencies {
+  	        compile 'com.github.blackmann:dv-android-sdk-1.0:1.0.1'
+  	}
 ```
 
 The above should complete the DevLess integration process.
