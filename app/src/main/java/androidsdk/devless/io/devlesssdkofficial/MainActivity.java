@@ -15,6 +15,7 @@ import java.util.Map;
 import androidsdk.devless.io.devless.interfaces.DeleteResponse;
 import androidsdk.devless.io.devless.interfaces.EditDataResponse;
 import androidsdk.devless.io.devless.interfaces.GetDataResponse;
+import androidsdk.devless.io.devless.interfaces.LoginResponse;
 import androidsdk.devless.io.devless.interfaces.PostDataResponse;
 import androidsdk.devless.io.devless.interfaces.RequestResponse;
 import androidsdk.devless.io.devless.interfaces.SignUpResponse;
@@ -35,25 +36,71 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
-        String appUrl = "http://lontins.herokuapp.com";
-        String devlessToken = "5073c45a8b7f5dc0d73e42fdd0daebbb";
+        String appUrl = "http://buildgallery.herokuapp.com";  // remember no slash after the com just the absolute URL
+        String devlessToken = "41b1f8b6dd4823f63f8eeed626bfafa8";
 
         Devless devless = new Devless(this, appUrl, devlessToken);
 
         devless.addUserToken(sp);
 
+       // Log.e("token",devless.getDevlessUserToken());
 
-        devless.signUpWithPhoneNumberAndPassword("033445566", "password", sp, new SignUpResponse() {
+
+//        devless.signUpWithUsernameAndPassword("omotwor", "password", sp, new SignUpResponse() {
+//            @Override
+//            public void onSignUpSuccess(Payload payload) {
+//                Log.e("solve", payload.toString());
+//            }
+//
+//            @Override
+//            public void onSignUpFailed(ErrorMessage errorMessage) {
+//                Log.e("error", errorMessage.toString());
+//            }
+//        });
+
+//        devless.loginWithEmailAndPassword("example@mail.com", "password", sp, new LoginResponse() {
+//            @Override
+//            public void onLogInSuccess(ResponsePayload response) {
+//                Log.e("Success==", response.toString());
+//            }
+//
+//            @Override
+//            public void onLogInFailed(ErrorMessage errorMessage) {
+//                Log.e("Failure==", errorMessage.toString());
+//            }
+//        });
+
+
+
+//        List<String> params =  new ArrayList<>(Arrays.asList(
+//                "","password","omotourchanged","","", "", ""
+//        ));
+//        devless.methodCall("devless", "updateProfile", params, new RequestResponse() {
+//            @Override
+//            public void onSuccess(ResponsePayload response) {
+//                Log.e("Success==", response.toString());
+//            }
+//
+//            @Override
+//            public void userNotAuthenticated(ErrorMessage message) {
+//                Log.e("Failure==", message.toString());
+//            }
+//        });
+
+
+        devless.updateProfile("", "password", "omoomo", "", "", "", "", new RequestResponse() {
             @Override
-            public void onSignUpSuccess(Payload payload) {
-                Log.e("solve", payload.toString());
+            public void onSuccess(ResponsePayload response) {
+                Log.e("passed", response.toString());
             }
 
             @Override
-            public void onSignUpFailed(ErrorMessage errorMessage) {
-                Log.e("error", errorMessage.toString());
+            public void userNotAuthenticated(ErrorMessage message) {
+                Log.e("failed", message.toString());
             }
         });
+
+
 
     }
 

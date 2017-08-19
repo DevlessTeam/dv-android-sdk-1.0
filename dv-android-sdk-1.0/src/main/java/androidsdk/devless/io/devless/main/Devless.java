@@ -333,7 +333,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void onSuccess(ResponsePayload response) {
 
                 try {
-                    //Log.e("phone number", response.toString());
+                    Log.e("phone number", response.toString());
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
@@ -798,6 +798,62 @@ public class Devless extends AppCompatActivity implements Serializable{
         this.orderBy = orderBy;
         return this;
     }
+
+    public void updateProfile(
+            String email,
+            String password,
+            String username,
+            String phoneNumber,
+            String firstname,
+            String lastname,
+            String others,
+            final RequestResponse requestResponse)
+    {
+        List<String> updateDetails = new ArrayList<>(Arrays.asList(
+                email, password, username, phoneNumber, firstname, lastname, others
+        ));
+
+        methodCall("devless", "updateProfile", updateDetails, new RequestResponse() {
+            @Override
+            public void onSuccess(ResponsePayload response) {
+                requestResponse.onSuccess(response);
+            }
+
+            @Override
+            public void userNotAuthenticated(ErrorMessage message) {
+                requestResponse.userNotAuthenticated(message);
+            }
+        });
+    }
+
+
+    public void updateUser(
+            String email,
+            String password,
+            String username,
+            String phoneNumber,
+            String firstname,
+            String lastname,
+            String others,
+            final RequestResponse requestResponse)
+    {
+        List<String> updateDetails = new ArrayList<>(Arrays.asList(
+                email, password, username, phoneNumber, firstname, lastname, others
+        ));
+
+        methodCall("devless", "updateProfile", updateDetails, new RequestResponse() {
+            @Override
+            public void onSuccess(ResponsePayload response) {
+                requestResponse.onSuccess(response);
+            }
+
+            @Override
+            public void userNotAuthenticated(ErrorMessage message) {
+                requestResponse.userNotAuthenticated(message);
+            }
+        });
+    }
+
 
 }
 
