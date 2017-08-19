@@ -481,6 +481,33 @@ devless.delete(serviceName, tableName, "6", new DeleteResponse() {
         });
 ```
 
+# Update User profile
+```Java
+	/*params (
+	    String email,
+            String password,
+            String username,
+            String phoneNumber,
+            String firstname,
+            String lastname,
+            String others,
+            final RequestResponse requestResponse)*/
+	    
+	 //enter your details and leave blanc what you dont want to update  or fill it with what exists already
+	 
+	 devless.updateProfile("", "password", "omoomo", "", "", "", "", new RequestResponse() {
+	    @Override
+	    public void onSuccess(ResponsePayload response) {
+		Log.e("passed", response.toString());
+	    }
+
+	    @Override
+	    public void userNotAuthenticated(ErrorMessage message) {
+		Log.e("failed", message.toString());
+	    }
+	});
+```
+
 # Search / Query Data
 #### Key things
 - ***where*** takes fielfName and value you want to search
