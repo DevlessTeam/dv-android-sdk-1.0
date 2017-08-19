@@ -19,9 +19,9 @@ Add it in your root build.gradle (Project: project_name) at the end of repositor
 #### Step two
 Add the dependency to your build.gradle(Module: app)
 ```Java
-  dependencies {
-        compile 'com.github.blackmann:dv-android-sdk-1.0:1.0.1'
-  	}
+  	dependencies {
+	        compile 'com.github.DevlessTeam:dv-android-sdk-1.0:1.0'
+	}
 ```
 
 The above should complete the DevLess integration process.
