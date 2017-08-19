@@ -1,6 +1,5 @@
 ![alt text](https://img.shields.io/badge/dv--android--sdk--1.0-official-blue.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7b3ca66eec8045158528d57a29ed37ad)](https://www.codacy.com/app/charlesagyemang/dv-android-sdk-1.0?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DevlessTeam/dv-android-sdk-1.0&amp;utm_campaign=Badge_Grade)
-
 [![](https://jitpack.io/v/DevlessTeam/dv-android-sdk-1.0.svg)](https://jitpack.io/#DevlessTeam/dv-android-sdk-1.0/1.0.1)
 
 # Devless_Android_SDK(dv-android-sdk-1.0)
