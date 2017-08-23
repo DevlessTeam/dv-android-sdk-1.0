@@ -4,6 +4,8 @@
 
 # Devless_Android_SDK(dv-android-sdk-1.0)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7b3ca66eec8045158528d57a29ed37ad)](https://www.codacy.com/app/charlesagyemang/dv-android-sdk-1.0?utm_source=github.com&utm_medium=referral&utm_content=DevlessTeam/dv-android-sdk-1.0&utm_campaign=badger)
+
 ## SETUP
 #### Step One
 Add the JitPack repository to your build file if it does not already exist
