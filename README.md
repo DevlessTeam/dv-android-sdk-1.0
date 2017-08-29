@@ -1,7 +1,7 @@
 ![alt text](https://img.shields.io/badge/dv--android--sdk--1.0-official-blue.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7b3ca66eec8045158528d57a29ed37ad)](https://www.codacy.com/app/charlesagyemang/dv-android-sdk-1.0?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DevlessTeam/dv-android-sdk-1.0&amp;utm_campaign=Badge_Grade)
+[![](https://jitpack.io/v/DevlessTeam/dv-android-sdk-1.0.svg)](https://jitpack.io/#DevlessTeam/dv-android-sdk-1.0/1.0.2)
 
-[![](https://jitpack.io/v/DevlessTeam/dv-android-sdk-1.0.svg)](https://jitpack.io/#DevlessTeam/dv-android-sdk-1.0/1.0)
 
 # Devless_Android_SDK(dv-android-sdk-1.0)
 
@@ -70,51 +70,61 @@ Get your **app url**, **the service name**, **devless token** and **table name**
 /**
 //call the getData Method on the devless instance. It takes three parameters(serviceName, tableName, //new new GetDataResponse) ie service name, table name and callback. Your response will be in the //void OnSuccess method  //Do what ever you want with the response.
 
-String serviceName = "";// Your service name here
-String tableName = "";// Your table name here
-devless.getData(serviceName, tableName, new GetDataResponse() {
+	String serviceName = "";// Your service name here
+	String tableName = "";// Your table name here
+	devless.getData(serviceName, tableName, new GetDataResponse() {
             @Override
-            public void OnSuccess(ResponsePayload responsePayload) {
-                // success
+            public void onSuccess(ResponsePayload response) {
+                Log.e("success", response.toString());
             }
+
             @Override
-            public void OnFailed(ErrorMessage errorMessage) {
-                // failure
+            public void onFailed(ErrorMessage errorMessage) {
+                Log.e("Failed", errorMessage.toString());
             }
+
             @Override
-            public void UserNotAuthenticated(ErrorMessage errorMessage) {   
-             // user not authenticated
+            public void userNotAuthenticated(ErrorMessage message) {
+                Log.e("UnAuth", message.toString());
+            }
+
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                Log.e("FullPostData", response.toString());
             }
         });
- //watch this example below      
-*/  
+	
+ 	//watch this example below      
+	*/  
+	String serviceName = "new_service";//replace with your serviceName
+	String tableName = "names";//replace with your tableName
 
-String serviceName = "new_service";//replace with your serviceName
-String tableName = "names";//replace with your tableName
+	devless.getData(serviceName, tableName, new GetDataResponse() {  
+	    @Override
+	    public void onSuccess(ResponsePayload response) {
+		//Do what you want with the data here
+		//lets toast i
+		Log.e("GetDataSuccessResponse", response.toString());
+	    }
 
-devless.getData(serviceName, tableName, new GetDataResponse() {
-            @Override
-            public void OnSuccess(ResponsePayload responsePayload) {
-                //Do what you want with the data here
-                //lets toast it
-                Log.e("GetDataSuccessResponse", responsePayload.toString());
-            }
+	    @Override
+	    public void onFailed(ErrorMessage errorMessage) {
+		//Error trying to get from table
+		//lets toast the error message
+		Log.e("GetDataFailedResponse", errorMessage.toString());
+	    }
 
-            @Override
-            public void OnFailed(ErrorMessage errorMessage) {
-                //Error trying to get from table
-                //lets toast the error message
-                Log.e("GetDataFailedResponse", errorMessage.toString());
+	    @Override
+	    public void userNotAuthenticated(ErrorMessage message) {
+		//This part will run when user is not authenticated and the table is auth protected
+		//You cansend the user to the login page to login but lets just toast the erro as usual
+		Log.e("UserNotAuthError", message.toString());
+	    }
 
-            }
-
-            @Override
-            public void UserNotAuthenticated(ErrorMessage errorMessage) {
-                //This part will run when user is not authenticated and the table is auth protected
-                //You cansend the user to the login page to login but lets just toast the erro as usual
-                Log.e("UserNotAuthError", errorMessage.toString());
-
-            }
+	    @Override
+	    public void fullRequestResponse(ResponsePayload response) {
+		Log.e("FullPostData", response.toString());
+	    }
         });
 ```
 # CRUD part of devless
@@ -136,26 +146,32 @@ devless.getData(serviceName, tableName, new GetDataResponse() {
     String serviceName = "new_service";//your service name
     String tableName = "names";//your table name
 
-    devless.postData(serviceName, tableName, dataToAdd, new PostDataResponse() {
-            @Override
-            public void OnSuccess(ResponsePayload responsePayload) {
-                //Post successful
+    	devless.postData(serviceName, tableName, dataToAdd, new PostDataResponse() {
+	    
+	    @Override
+            public void onSuccess(ResponsePayload response) {
+	    	//Post successful
                 //lets toast the success payload
-                Log.e("PostDataSuccessResponse", responsePayload.toString());
+                Log.e("PostDataSuccessResponse", response.toString());
             }
 
             @Override
-            public void OnFailed(ErrorMessage errorMessage) {
-                //Error trying to get from table
+            public void onFailed(ErrorMessage errorMessage) {
+	    	//Error trying to get from table
                 //lets toast the error message
                 Log.e("PostDataFailedResponse", errorMessage.toString());
             }
 
             @Override
-            public void UserNotAuthenticated(ErrorMessage errorMessage) {
-                //This part will run when user is not authenticated and the table is auth protected
+            public void userNotAuthenticated(ErrorMessage message) {
+	    	//This part will run when user is not authenticated and the table is auth protected
                 //You cansend the user to the login page to login but lets just toast the erro as usual
-                Log.e("UserNotAuthResponse", errorMessage.toString());
+                Log.e("UserNotAuthResponse", message.toString());
+            }
+
+            @Override
+            public void fullPostDataResponse(ResponsePayload response) {
+                Log.e("FullPostdata", response.toString());
             }
         });
 ```
@@ -169,7 +185,7 @@ Map<String, Object> dataToChange = new HashMap<>();
       dataToChange.put("name", "Nana Akua");
 
       /*
-      Call the edit method on the devless instance you already created and pass in the service name, table name, dataToChange, id of the recored and a new EditDataResponse() to process your response to see whether it has been updated or not
+      Call the edit method on the devless instance you already created and pass in the service name, table name, dataToChange, 	     id of the recored and a new EditDataResponse() to process your response to see whether it has been updated or not
       */
 
       String serviceName = "new_service";//your service name
@@ -177,24 +193,30 @@ Map<String, Object> dataToChange = new HashMap<>();
       String id = "16"// replace with the id you want to delete
 
       devless.edit(serviceName, tableName, patch, "6", new EditDataResponse() {
-            @Override
-            public void OnSuccess(ResponsePayload response) {
-                // Edit was successful do what you want here
+	    
+	    @Override
+            public void onSuccess(ResponsePayload response) {
+	    	// Edit was successful do what you want here
                 // Lets just toast the success response
                 Log.e("EditDataSuccessResponse", response.toString());
             }
 
             @Override
-            public void OnFailed(ErrorMessage errorMessage) {
-                // Error whiles editing or updating
+            public void onFailed(ErrorMessage errorMessage) {
+	    	// Error whiles editing or updating
                 Log.e("EditDataFailedResponse", errorMessage.toString());
             }
 
             @Override
-            public void UserNotAuthenticated(ErrorMessage message) {
-                //This part will run when user is not authenticated and the table is auth protected
+            public void userNotAuthenticated(ErrorMessage message) {
+	    	//This part will run when user is not authenticated and the table is auth protected
                 //You cansend the user to the login page to login but lets just toast the erro as usual
-                Log.e("UserNotAuth", message.toString());
+                Log.e("UnAuth", message.toString());
+            }
+
+            @Override
+            public void fullEditDataResponse(ResponsePayload response) {
+                Log.e("FullPostData", response.toString());
             }
         });
 ```
@@ -207,25 +229,31 @@ String serviceName = "new_service";//your service name
 String tableName = "names";//your table name
 String id = "1";// replace with the id you want to delete
 
-devless.delete(serviceName, tableName, "6", new DeleteResponse() {
-            @Override
-            public void OnSuccess(ResponsePayload responsePayload) {
-                // Delete was successful do what you want here
+	devless.delete(serviceName, tableName, "6", new DeleteResponse() {
+	    
+	    @Override
+            public void onSuccess(ResponsePayload response) {
+	    	// Delete was successful do what you want here
                 // Lets just toast the success response
-                Log.e("DeleteDataSuccess", responsePayload.toString());
+                Log.e("DeleteDataSuccess", response.toString());
             }
 
             @Override
-            public void OnFailed(ErrorMessage errorMessage) {
-                // Error whiles Deleting or updating
+            public void onFailed(ErrorMessage errorMessage) {
+	    	// Error whiles Deleting or updating
                 Log.e("DeleteDataSFailed", errorMessage.toString());
             }
 
             @Override
-            public void UserNotAuthenticated(ErrorMessage errorMessage) {
-                //This part will run when user is not authenticated and the table is auth protected
+            public void userNotAuthenticated(ErrorMessage message) {
+	      	//This part will run when user is not authenticated and the table is auth protected
                 //You cansend the user to the login page to login but lets just toast the erro as usual
-                Log.e("UserNotAuth", errorMessage.toString());
+                Log.e("UserNotAuth", message.toString());
+            }
+
+            @Override
+            public void fullDeleteResponse(ResponsePayload response) {
+                Log.e("FullPostData", response.toString());
             }
         });
 ```
