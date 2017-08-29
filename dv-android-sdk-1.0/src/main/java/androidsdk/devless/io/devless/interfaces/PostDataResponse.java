@@ -11,4 +11,5 @@ public interface PostDataResponse {
     void onSuccess(ResponsePayload response);
     void onFailed(ErrorMessage errorMessage);
     void userNotAuthenticated(ErrorMessage message);
+    void fullPostDataResponse(ResponsePayload response);
 }

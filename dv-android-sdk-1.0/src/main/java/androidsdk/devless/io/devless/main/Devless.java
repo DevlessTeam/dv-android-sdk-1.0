@@ -65,8 +65,11 @@ public class Devless extends AppCompatActivity implements Serializable{
         result.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //TODO::Display Full Result and let the dev manipulate it to his suit
+
                 try {
                     String result = response.body().string();
+                    requestResponse.fullRequestResponse(new ResponsePayload(result));
                     boolean bool = DevlessBuilder.checkAuth(result);
                     if (bool){
 
@@ -93,7 +96,7 @@ public class Devless extends AppCompatActivity implements Serializable{
         });
     }
 
-    public void postData(String serviceName, String tableName,  Map<String, Object> dataToAdd, final PostDataResponse requestResponseresponse) {
+    public void postData(String serviceName, String tableName,  Map<String, Object> dataToAdd, final PostDataResponse postDataResponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -109,27 +112,28 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                     String result = response.body().string();
                     boolean bool = DevlessBuilder.checkAuth(result);
+                    postDataResponse.fullPostDataResponse(new ResponsePayload(result));
                     if (bool){
 
                         int successPull = DevlessBuilder.checkPostSuccess(result);
                         if(successPull == 1){
                             // successful
-                            requestResponseresponse.onSuccess(new ResponsePayload(result));
+                            postDataResponse.onSuccess(new ResponsePayload(result));
 
                         } else if (successPull == 0){
                             //wrong fieldname
                             String errorMessage = "Error: Post failed because there was a  wrong fieldName please check it";
-                            requestResponseresponse.onFailed(new ErrorMessage(errorMessage));
+                            postDataResponse.onFailed(new ErrorMessage(errorMessage));
 
                         } else {
                             // errorMessage
                             String errorMessage = "Error: The ServiceName or TableName doesn't exist";
-                            requestResponseresponse.onFailed(new ErrorMessage(errorMessage));
+                            postDataResponse.onFailed(new ErrorMessage(errorMessage));
                         }
 
 
                     }  else{
-                        requestResponseresponse.userNotAuthenticated( new ErrorMessage("Token expired please log in again"));
+                        postDataResponse.userNotAuthenticated( new ErrorMessage("Token expired please log in again"));
                     }
 
                 } catch (IOException e) {
@@ -139,12 +143,12 @@ public class Devless extends AppCompatActivity implements Serializable{
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                requestResponseresponse.onSuccess( new ResponsePayload( t.toString()));
+                postDataResponse.onSuccess( new ResponsePayload( t.toString()));
             }
         });
     }
 
-    public void edit(String serviceName, String tableName, Map<String, Object> update,  String id, final EditDataResponse requestResponseresponse) {
+    public void edit(String serviceName, String tableName, Map<String, Object> update,  String id, final EditDataResponse editDataResponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -158,30 +162,32 @@ public class Devless extends AppCompatActivity implements Serializable{
                 try {
                     String result = response.body().string();
                     boolean bool = DevlessBuilder.checkAuth(result);
+                    editDataResponse.fullEditDataResponse(new ResponsePayload(result));
+
                     if (bool){
                         int successPull = DevlessBuilder.checkPostSuccess(result);
                         if(successPull == 1){
                             // successful
-                            requestResponseresponse.onSuccess(new ResponsePayload(result));
+                            editDataResponse.onSuccess(new ResponsePayload(result));
 
                         } else if (successPull == 0){
                             //wrong fieldname
                             String errorMessage = "Error: Edit failed because there was a  wrong fieldName please check it";
-                            requestResponseresponse.onFailed(new ErrorMessage(errorMessage));
+                            editDataResponse.onFailed(new ErrorMessage(errorMessage));
                         } else if (successPull == 2){
                             //wrong fieldname
                             String errorMessage = "Error: Edit Failed Because Id does not exist";
-                            requestResponseresponse.onFailed(new ErrorMessage(errorMessage));
+                            editDataResponse.onFailed(new ErrorMessage(errorMessage));
 
                         } else {
                             // errorMessage
                             String errorMessage = "Error: The ServiceName or TableName doesn't exist";
-                            requestResponseresponse.onFailed(new ErrorMessage(errorMessage));
+                            editDataResponse.onFailed(new ErrorMessage(errorMessage));
                         }
 
 
                     }  else{
-                        requestResponseresponse.userNotAuthenticated(new ErrorMessage("Token expired please log in again"));
+                        editDataResponse.userNotAuthenticated(new ErrorMessage("Token expired please log in again"));
                     }
 
                 } catch (IOException e) {
@@ -190,13 +196,13 @@ public class Devless extends AppCompatActivity implements Serializable{
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                requestResponseresponse.onSuccess( new ResponsePayload(t.toString()));
+                editDataResponse.onSuccess( new ResponsePayload(t.toString()));
             }
         });
     }
 
 
-    public void delete(String serviceName, String tableName,  String id, final DeleteResponse requestResponse) {
+    public void delete(String serviceName, String tableName,  String id, final DeleteResponse deleteResponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DevlessBuilder.formUrl(rootUrl, serviceName))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -211,23 +217,25 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                     String result = response.body().string();
                     boolean bool = DevlessBuilder.checkAuth(result);
+                    deleteResponse.fullDeleteResponse(new ResponsePayload(result));
+
                     if (bool){
                         int successPull = DevlessBuilder.checkPostSuccess(result);
                         if(successPull == 1){
                             // successful
-                            requestResponse.onSuccess(new ResponsePayload(result));
+                            deleteResponse.onSuccess(new ResponsePayload(result));
                         } else if (successPull == 2){
                             //wrong fieldName
                             String errorMessage = "Error: Delete Failed Because Id does not exist";
-                            requestResponse.onFailed(new ErrorMessage(errorMessage));
+                            deleteResponse.onFailed(new ErrorMessage(errorMessage));
 
                         } else {
                             // errorMessage
                             String errorMessage = "Error: The ServiceName or TableName doesn't exist";
-                            requestResponse.onFailed(new ErrorMessage(errorMessage));
+                            deleteResponse.onFailed(new ErrorMessage(errorMessage));
                         }
                     }  else{
-                        requestResponse.userNotAuthenticated(new ErrorMessage("Token expired please log in again"));
+                        deleteResponse.userNotAuthenticated(new ErrorMessage("Token expired please log in again"));
                     }
 
                 } catch (IOException e) {
@@ -236,7 +244,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                requestResponse.onSuccess(new ResponsePayload(t.toString()));
+                deleteResponse.onSuccess(new ResponsePayload(t.toString()));
             }
         });
     }
@@ -255,8 +263,9 @@ public class Devless extends AppCompatActivity implements Serializable{
                 try {
 
                     String result = response.body().string();
-
                     boolean bool = DevlessBuilder.checkAuth(result);
+                    requestResponse.fullRequestResponse(new ResponsePayload(result));
+
                     if (bool){
                         requestResponse.onSuccess(new ResponsePayload(result));
                     }  else{
@@ -315,7 +324,12 @@ public class Devless extends AppCompatActivity implements Serializable{
 
             @Override
             public void userNotAuthenticated(ErrorMessage errorMessage) {
-                //
+                // Do Nothing Here
+            }
+
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                // Do Nothing Here
             }
 
         });
@@ -360,7 +374,12 @@ public class Devless extends AppCompatActivity implements Serializable{
 
             @Override
             public void userNotAuthenticated(ErrorMessage errorMessage) {
-                //
+                // Do Nothing
+            }
+
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                //Do Nothing
             }
 
         });
@@ -407,11 +426,16 @@ public class Devless extends AppCompatActivity implements Serializable{
                 //signUpResponse.onSignUpFailed(message);
             }
 
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                // Do Nothing
+            }
+
         });
 
     }
 
-    public void methodCall(String serviceName, String actionName, List<String> params, final RequestResponse requestResponseresponse) {
+    public void methodCall(String serviceName, String actionName, List<String> params, final RequestResponse requestResponse) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(rootUrl + "/api/v1/service/"+ serviceName + "/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -424,16 +448,20 @@ public class Devless extends AppCompatActivity implements Serializable{
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    requestResponseresponse.onSuccess( new ResponsePayload( response.body().string()));
+
+                    requestResponse.onSuccess( new ResponsePayload( response.body().string()));
+                    requestResponse.fullRequestResponse(new ResponsePayload( response.body().string()));
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    requestResponse.fullRequestResponse(new ResponsePayload(e.toString()));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                requestResponseresponse.onSuccess(new ResponsePayload(t.toString()));
+                requestResponse.onSuccess(new ResponsePayload(t.toString()));
+                requestResponse.fullRequestResponse(new ResponsePayload(t.toString()));
             }
         });
     }
@@ -463,6 +491,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                         editor.putString("devlessUserToken", token);
                         editor.commit();
                         ResponsePayload responsePayload = new ResponsePayload(result);
+
                         loginResponse.onLogInSuccess(responsePayload);
                     } else {
                         ErrorMessage errorMessage = new ErrorMessage("Wrong Email or Password");
@@ -476,7 +505,12 @@ public class Devless extends AppCompatActivity implements Serializable{
 
             @Override
             public void userNotAuthenticated(ErrorMessage errorMessage) {
-                //
+                //Do nothing
+            }
+
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                //DO NOTHING
             }
         });
 
@@ -519,8 +553,15 @@ public class Devless extends AppCompatActivity implements Serializable{
 
             @Override
             public void userNotAuthenticated(ErrorMessage errorMessage) {
-
+                // Do Nothing
             }
+
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                // Do Nothing
+            }
+
+
         });
 
     }
@@ -562,7 +603,12 @@ public class Devless extends AppCompatActivity implements Serializable{
 
             @Override
             public void userNotAuthenticated(ErrorMessage errorMessage) {
-                //
+                //Do Nothing
+            }
+
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                //Do Nothing
             }
         });
 
@@ -578,7 +624,12 @@ public class Devless extends AppCompatActivity implements Serializable{
 
             @Override
             public void userNotAuthenticated(ErrorMessage errorMessage) {
+                // Do Nothing
+            }
 
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                logoutResponse.fullLogoutResponse(response);
             }
         });
     }
@@ -622,6 +673,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                     try {
                         //searchResponse.onSuccess(response.body().string());
                         String result = response.body().string();
+                        searchResponse.fullSearchResponse(new ResponsePayload(result));
 
                         boolean bool = DevlessBuilder.checkAuth(result);
                         if (bool){
@@ -634,12 +686,14 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                     } catch (IOException e) {
                         e.printStackTrace();
+                        searchResponse.fullSearchResponse(new ResponsePayload(e.toString()));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     searchResponse.onSuccess(new ResponsePayload(t.toString()));
+                    searchResponse.fullSearchResponse(new ResponsePayload(t.toString()));
                 }
             });
         } else {
@@ -655,6 +709,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                         String result = response.body().string();
 
                         boolean bool = DevlessBuilder.checkAuth(result);
+                        searchResponse.fullSearchResponse(new ResponsePayload(result));
                        if (bool){
                             searchResponse.onSuccess(new ResponsePayload(result));
                        }  else{
@@ -663,6 +718,7 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                     } catch (IOException e) {
                         e.printStackTrace();
+                        searchResponse.fullSearchResponse(new ResponsePayload(e.toString()));
                     }
                 }
 
@@ -698,6 +754,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                         String result = response.body().string();
 
                         boolean bool = DevlessBuilder.checkAuth(result);
+                        searchResponse.fullSearchResponse(new ResponsePayload(result));
                         if (bool){
                             searchResponse.onSuccess(new ResponsePayload(result));
                         }  else{
@@ -707,12 +764,14 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                     } catch (IOException e) {
                         e.printStackTrace();
+                        searchResponse.fullSearchResponse(new ResponsePayload(e.toString()));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     searchResponse.onSuccess(new ResponsePayload(t.toString()));
+                    searchResponse.fullSearchResponse(new ResponsePayload(t.toString()));
                 }
             });
 
@@ -740,6 +799,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                     String result = response.body().string();
 
                     boolean bool = DevlessBuilder.checkAuth(result);
+                    searchResponse.fullSearchResponse(new ResponsePayload(result));
                     if (bool){
                         searchResponse.onSuccess(new ResponsePayload(result) );
                         queryParams.clear();
@@ -753,6 +813,7 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    searchResponse.fullSearchResponse(new ResponsePayload(e.toString()));
                     queryParams.clear();
                 }
             }
@@ -760,6 +821,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 searchResponse.onSuccess(new ResponsePayload(t.toString()));
+                searchResponse.fullSearchResponse(new ResponsePayload(t.toString()));
                 queryParams .clear();
             }
         });
@@ -823,6 +885,11 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void userNotAuthenticated(ErrorMessage message) {
                 requestResponse.userNotAuthenticated(message);
             }
+
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                requestResponse.fullRequestResponse(response);
+            }
         });
     }
 
@@ -850,6 +917,11 @@ public class Devless extends AppCompatActivity implements Serializable{
             @Override
             public void userNotAuthenticated(ErrorMessage message) {
                 requestResponse.userNotAuthenticated(message);
+            }
+
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                requestResponse.fullRequestResponse(response);
             }
         });
     }
