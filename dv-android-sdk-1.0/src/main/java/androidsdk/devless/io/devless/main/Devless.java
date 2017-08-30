@@ -283,8 +283,8 @@ public class Devless extends AppCompatActivity implements Serializable{
     }
 
 
-    public void signUpWithEmailAndPassword(String email, final String password, final SharedPreferences sp, final SignUpResponse signUpResponse) {
-        final SharedPreferences.Editor editor = sp.edit();
+    public void signUpWithEmailAndPassword(String email, final String password, final SignUpResponse signUpResponse) {
+
         List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
                 email, password, "", "", "", "", ""
         ));
@@ -294,7 +294,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void onSuccess(ResponsePayload response) {
 
                 try {
-                      setDevlessUserToken(token);
+
                     //Log.e("respo", response.toString());
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
@@ -305,8 +305,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                         Payload resultPayload = new Payload(payload);
                         signUpResponse.onSignUpSuccess(resultPayload);
                         String token  =  resultObject.getString("token");
-                        editor.putString("devlessUserToken", token);
-                        editor.commit();
+                        setDevlessUserToken(token);
                     } else if (resultObject.length() == 3) {
                         ErrorMessage errorMessage = new ErrorMessage("Seems Email already exists wool");
                         signUpResponse.onSignUpFailed(errorMessage);
@@ -337,8 +336,8 @@ public class Devless extends AppCompatActivity implements Serializable{
 
     }
 
-    public void signUpWithPhoneNumberAndPassword(String phoneNumber, final String password, final SharedPreferences sp, final SignUpResponse signUpResponse) {
-        final SharedPreferences.Editor editor = sp.edit();
+    public void signUpWithPhoneNumberAndPassword(String phoneNumber, final String password, final SignUpResponse signUpResponse) {
+
         List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
                 null, password, null, phoneNumber, "", "", ""
         ));
@@ -348,7 +347,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void onSuccess(ResponsePayload response) {
 
                 try {
-                    Log.e("phone number", response.toString());
+
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
@@ -358,8 +357,6 @@ public class Devless extends AppCompatActivity implements Serializable{
                         Payload resultPayload = new Payload(payload);
                         signUpResponse.onSignUpSuccess(resultPayload);
                         String token  =  resultObject.getString("token");
-                        editor.putString("devlessUserToken", token);
-                        editor.commit();
                         setDevlessUserToken(token);
                     } else if (resultObject.length() == 3) {
                         ErrorMessage errorMessage = new ErrorMessage("Seems PhoneNumber already exists");
@@ -388,8 +385,8 @@ public class Devless extends AppCompatActivity implements Serializable{
 
     }
 
-    public void signUpWithUsernameAndPassword(String userName, String password, SharedPreferences sp, final SignUpResponse signUpResponse) {
-        final SharedPreferences.Editor editor = sp.edit();
+    public void signUpWithUsernameAndPassword(String userName, String password, final SignUpResponse signUpResponse) {
+
         List<String> signUpEmailANdPasswordDetails  = new ArrayList<>(Arrays.asList(
                 "", password, userName, "", "", "", ""
         ));
@@ -399,8 +396,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void onSuccess(ResponsePayload response) {
 
                 try {
-                    setDevlessUserToken(token);
-                    //Log.e("oooo", response.toString());
+
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
@@ -410,8 +406,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                         Payload resultPayload = new Payload(payload);
                         signUpResponse.onSignUpSuccess(resultPayload);
                         String token  =  resultObject.getString("token");
-                        editor.putString("devlessUserToken", token);
-                        editor.commit();
+                        setDevlessUserToken(token);
                     } else if (resultObject.length() == 3) {
                         ErrorMessage errorMessage = new ErrorMessage("Seems UserName already exists");
                         signUpResponse.onSignUpFailed(errorMessage);
@@ -470,8 +465,8 @@ public class Devless extends AppCompatActivity implements Serializable{
     }
 
 
-    public void loginWithEmailAndPassword(String email, final String password, final SharedPreferences sp, final LoginResponse loginResponse){
-        final SharedPreferences.Editor editor = sp.edit();
+    public void loginWithEmailAndPassword(String email, final String password, final LoginResponse loginResponse){
+
         List<String> loginParams  = new ArrayList<>(Arrays.asList(
                 "",
                  email,
@@ -492,11 +487,8 @@ public class Devless extends AppCompatActivity implements Serializable{
                         String result = payloadObject.getString("result");
                         JSONObject payloadReturnedObject = new JSONObject(result);
                         String token = payloadReturnedObject.getString("token");
-                        editor.putString("devlessUserToken", token);
-                        editor.commit();
                         setDevlessUserToken(token);
                         ResponsePayload responsePayload = new ResponsePayload(result);
-
                         loginResponse.onLogInSuccess(responsePayload);
                     } else {
                         ErrorMessage errorMessage = new ErrorMessage("Wrong Email or Password");
@@ -521,8 +513,8 @@ public class Devless extends AppCompatActivity implements Serializable{
 
     }
 
-    public void loginWithUsernameAndPassword(String userName, final String password, final SharedPreferences sp ,final LoginResponse loginResponse){
-        final SharedPreferences.Editor editor = sp.edit();
+    public void loginWithUsernameAndPassword(String userName, final String password, final LoginResponse loginResponse){
+
         List<String> loginParams  = new ArrayList<>(Arrays.asList(
                 userName,
                 "",
@@ -541,8 +533,6 @@ public class Devless extends AppCompatActivity implements Serializable{
                         String result = payloadObject.getString("result");
                         JSONObject payloadReturnedObject = new JSONObject(result);
                         String token = payloadReturnedObject.getString("token");
-                        editor.putString("devlessUserToken", token);
-                        editor.commit();
                         setDevlessUserToken(token);
                         ResponsePayload responsePayload = new ResponsePayload(result);
                         loginResponse.onLogInSuccess(responsePayload);
@@ -572,8 +562,8 @@ public class Devless extends AppCompatActivity implements Serializable{
 
     }
 
-    public void loginWithPhoneNumberAndPassword(String phoneNumber, final String password, final SharedPreferences sp, final LoginResponse loginResponse){
-        final SharedPreferences.Editor editor = sp.edit();
+    public void loginWithPhoneNumberAndPassword(String phoneNumber, final String password, final LoginResponse loginResponse){
+
         List<String> loginParams  = new ArrayList<>(Arrays.asList(
                 "",
                 "",
@@ -593,8 +583,6 @@ public class Devless extends AppCompatActivity implements Serializable{
                         String result = payloadObject.getString("result");
                         JSONObject payloadReturnedObject = new JSONObject(result);
                         String token = payloadReturnedObject.getString("token");
-                        editor.putString("devlessUserToken", token);
-                        editor.commit();
                         setDevlessUserToken(token);
                         ResponsePayload responsePayload = new ResponsePayload(result);
                         loginResponse.onLogInSuccess(responsePayload);

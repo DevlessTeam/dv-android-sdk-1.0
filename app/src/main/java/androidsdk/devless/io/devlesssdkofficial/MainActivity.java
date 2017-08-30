@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Create a shared preference like this
-        SharedPreferences sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        // SharedPreferences sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
         //Now go ahead and set devless up
         String appUrl = "http://buildgallery.herokuapp.com";  // remember no slash after the com just the absolute URL
@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
           setUpDevlessUserToken Right under the instance and pass in the
           name of your shared preference variable. Im my case I called my shared preference *sp*
           */
-        devless.addUserToken(sp);
+        // devless.addUserToken(sp);
+
+        //Log.e("token", devless.getDevlessUserToken());
 
 
         // Sign Up
@@ -64,19 +66,41 @@ public class MainActivity extends AppCompatActivity {
         */
 
 
-        /*
-        devless.loginWithEmailAndPassword("email@email.com", "password", sp, new LoginResponse() {
+
+//        devless.loginWithEmailAndPassword("email@email.com", "password", new LoginResponse() {
+//            @Override
+//            public void onLogInSuccess(ResponsePayload response) {
+//                Log.e("==Success==", response.toString());
+//            }
+//
+//            @Override
+//            public void onLogInFailed(ErrorMessage errorMessage) {
+//                Log.e("==Failure==", errorMessage.toString());
+//            }
+//        });
+
+        devless.getData("gitmo", "test_table", new GetDataResponse() {
             @Override
-            public void onLogInSuccess(ResponsePayload response) {
-                Log.e("==Success==", response.toString());
+            public void onSuccess(ResponsePayload response) {
+                Log.e("Success", response.toString());
             }
 
             @Override
-            public void onLogInFailed(ErrorMessage errorMessage) {
-                Log.e("==Failure==", errorMessage.toString());
+            public void onFailed(ErrorMessage errorMessage) {
+                Log.e("Failure", errorMessage.toString());
+            }
+
+            @Override
+            public void userNotAuthenticated(ErrorMessage message) {
+                Log.e("UserNotAuth", message.toString());
+            }
+
+            @Override
+            public void fullRequestResponse(ResponsePayload response) {
+                Log.e("Full", response.toString());
             }
         });
-        */
+
 
 
 
