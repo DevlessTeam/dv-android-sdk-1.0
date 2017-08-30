@@ -294,6 +294,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void onSuccess(ResponsePayload response) {
 
                 try {
+                      setDevlessUserToken(token);
                     //Log.e("respo", response.toString());
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
@@ -359,6 +360,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                         String token  =  resultObject.getString("token");
                         editor.putString("devlessUserToken", token);
                         editor.commit();
+                        setDevlessUserToken(token);
                     } else if (resultObject.length() == 3) {
                         ErrorMessage errorMessage = new ErrorMessage("Seems PhoneNumber already exists");
                         signUpResponse.onSignUpFailed(errorMessage);
@@ -397,6 +399,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void onSuccess(ResponsePayload response) {
 
                 try {
+                    setDevlessUserToken(token);
                     //Log.e("oooo", response.toString());
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
@@ -480,6 +483,7 @@ public class Devless extends AppCompatActivity implements Serializable{
             public void onSuccess(ResponsePayload response) {
 
                 try {
+
                     JSONObject jO = new JSONObject(response.toString());
                     String payload = jO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
@@ -490,6 +494,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                         String token = payloadReturnedObject.getString("token");
                         editor.putString("devlessUserToken", token);
                         editor.commit();
+                        setDevlessUserToken(token);
                         ResponsePayload responsePayload = new ResponsePayload(result);
 
                         loginResponse.onLogInSuccess(responsePayload);
@@ -538,6 +543,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                         String token = payloadReturnedObject.getString("token");
                         editor.putString("devlessUserToken", token);
                         editor.commit();
+                        setDevlessUserToken(token);
                         ResponsePayload responsePayload = new ResponsePayload(result);
                         loginResponse.onLogInSuccess(responsePayload);
                     } else {
@@ -589,6 +595,7 @@ public class Devless extends AppCompatActivity implements Serializable{
                         String token = payloadReturnedObject.getString("token");
                         editor.putString("devlessUserToken", token);
                         editor.commit();
+                        setDevlessUserToken(token);
                         ResponsePayload responsePayload = new ResponsePayload(result);
                         loginResponse.onLogInSuccess(responsePayload);
                     } else {
@@ -927,5 +934,5 @@ public class Devless extends AppCompatActivity implements Serializable{
     }
 
 
-}
 
+}
