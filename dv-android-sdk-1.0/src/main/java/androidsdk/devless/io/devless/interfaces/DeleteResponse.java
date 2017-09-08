@@ -12,5 +12,6 @@ public interface DeleteResponse {
     void onSuccess(ResponsePayload response);
     void onFailed(ErrorMessage errorMessage);
     void userNotAuthenticated(ErrorMessage message);
+    void fullDeleteResponse (ResponsePayload response);
 
 }
