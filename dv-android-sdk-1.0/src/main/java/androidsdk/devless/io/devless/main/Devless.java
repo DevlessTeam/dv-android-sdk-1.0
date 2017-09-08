@@ -305,6 +305,10 @@ public class Devless extends AppCompatActivity implements Serializable{
                         Payload resultPayload = new Payload(payload);
                         signUpResponse.onSignUpSuccess(resultPayload);
                         String token  =  resultObject.getString("token");
+
+                        editor.putString("devlessUserToken", token);
+                        editor.commit();
+
                         setDevlessUserToken(token);
                     } else if (resultObject.length() == 3) {
                         ErrorMessage errorMessage = new ErrorMessage("Seems Email already exists wool");
@@ -397,6 +401,8 @@ public class Devless extends AppCompatActivity implements Serializable{
 
                 try {
 
+                    //Log.e("oooo", response.toString());
+
                     JSONObject JO = new JSONObject(response.toString());
                     String payload = JO.getString("payload");
                     JSONObject payloadObject = new JSONObject(payload);
@@ -406,6 +412,9 @@ public class Devless extends AppCompatActivity implements Serializable{
                         Payload resultPayload = new Payload(payload);
                         signUpResponse.onSignUpSuccess(resultPayload);
                         String token  =  resultObject.getString("token");
+                        editor.putString("devlessUserToken", token);
+                        editor.commit();
+
                         setDevlessUserToken(token);
                     } else if (resultObject.length() == 3) {
                         ErrorMessage errorMessage = new ErrorMessage("Seems UserName already exists");
