@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         devless.addUserToken(sp);
 
 
+        Log.e("==repo==", devless.getDevlessUserToken());
+
+
         // Sign Up
         /*
         devless.signUpWithEmailAndPassword("email1@email.com", "password", sp, new SignUpResponse() {
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         /*
+
         devless.loginWithEmailAndPassword("email@email.com", "password", sp, new LoginResponse() {
             @Override
             public void onLogInSuccess(ResponsePayload response) {
@@ -77,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
+
+
+
 
 
 
