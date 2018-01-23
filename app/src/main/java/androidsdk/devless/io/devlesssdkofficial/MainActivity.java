@@ -39,16 +39,18 @@ public class MainActivity extends AppCompatActivity {
         String devlessToken = "41b1f8b6dd4823f63f8eeed626bfafa8"; //this is my token
 
         //This is how to create a devless instance
-        Devless devless = new Devless(this, appUrl, devlessToken);
+        //Devless devless = new Devless(this, appUrl, devlessToken);
 
           /*
           setUpDevlessUserToken Right under the instance and pass in the
           name of your shared preference variable. Im my case I called my shared preference *sp*
           */
-        devless.addUserToken(sp);
+        //devless.addUserToken(sp);
+
+        //Log.e("token", devless.getDevlessUserToken());
 
 
-        Log.e("==repo==", devless.getDevlessUserToken());
+        //Log.e("==repo==", devless.getDevlessUserToken());
 
 
         // Sign Up
@@ -67,52 +69,76 @@ public class MainActivity extends AppCompatActivity {
         */
 
 
-        /*
-
-        devless.loginWithEmailAndPassword("email@email.com", "password", sp, new LoginResponse() {
-            @Override
-            public void onLogInSuccess(ResponsePayload response) {
-                Log.e("==Success==", response.toString());
-            }
-
-            @Override
-            public void onLogInFailed(ErrorMessage errorMessage) {
-                Log.e("==Failure==", errorMessage.toString());
-            }
-        });
-        */
 
 
+//        devless.loginWithEmailAndPassword("email1@email.com", "password", sp, new LoginResponse() {
+//            @Override
+//            public void onLogInSuccess(ResponsePayload response) {
+//                Log.e("==Passed==", response.toString());
+//            }
+//
+//            @Override
+//            public void onLogInFailed(ErrorMessage errorMessage) {
+//                Log.e("==Failure==", errorMessage.toString());
+//            }
+//        });
+
+
+//
+//        devless.getData("gitmo", "test_table", new GetDataResponse() {
+//            @Override
+//            public void onSuccess(ResponsePayload response) {
+//                Log.e("Success", response.toString());
+//            }
+//
+//            @Override
+//            public void onFailed(ErrorMessage errorMessage) {
+//                Log.e("Failure", errorMessage.toString());
+//            }
+//
+//            @Override
+//            public void userNotAuthenticated(ErrorMessage message) {
+//                Log.e("UserNotAuth", message.toString());
+//            }
+//
+//            @Override
+//            public void fullRequestResponse(ResponsePayload response) {
+//                Log.e("Full", response.toString());
+//            }
+//        });
 
 
 
 
-        /* Post Data
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("name", "koobi");
 
-        devless.postData("plans", "test_table", data, new PostDataResponse() {
-            @Override
-            public void onSuccess(ResponsePayload response) {
-                Log.e("success", response.toString());
-            }
 
-            @Override
-            public void onFailed(ErrorMessage errorMessage) {
-                Log.e("Failed", errorMessage.toString());
-            }
 
-            @Override
-            public void userNotAuthenticated(ErrorMessage message) {
-                Log.e("UnAuth", message.toString());
-            }
+         //Post Data
+//        Map<String, Object> data = new HashMap<String, Object>();
+//        data.put("name", "koobi");
+//
+//        devless.postData("plans", "test_table", data, new PostDataResponse() {
+//            @Override
+//            public void onSuccess(ResponsePayload response) {
+//                Log.e("success", response.toString());
+//            }
+//
+//            @Override
+//            public void onFailed(ErrorMessage errorMessage) {
+//                Log.e("Failed", errorMessage.toString());
+//            }
+//
+//            @Override
+//            public void userNotAuthenticated(ErrorMessage message) {
+//                Log.e("UnAuth", message.toString());
+//            }
+//
+//            @Override
+//            public void fullPostDataResponse(ResponsePayload response) {
+//                Log.e("FullPostdata", response.toString());
+//            }
+//        });
 
-            @Override
-            public void fullPostDataResponse(ResponsePayload response) {
-                Log.e("FullPostdata", response.toString());
-            }
-        });
-        */
 
         /* get data
         devless.getData("plans", "test_table", new GetDataResponse() {

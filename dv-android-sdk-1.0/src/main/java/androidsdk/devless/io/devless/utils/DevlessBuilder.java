@@ -1,5 +1,7 @@
 package androidsdk.devless.io.devless.utils;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,9 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 
 public class DevlessBuilder {
+
+
 
     public static String formUrl (String rootUrl, String serviceName) {
         return rootUrl +  "/api/v1/service/" + serviceName + "/";
@@ -30,6 +35,22 @@ public class DevlessBuilder {
         return map;
     }
 
+    public static Map<String,Object> createMultiAssign (String table_name, ArrayList<Map<String,Object>> fieldMap){
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Object> mainList  = new ArrayList<Object>();
+        Map<String, Object> miniMap = new HashMap<String, Object>();
+        List<Object> fieldList = new ArrayList<Object>();
+        for (Map<String,Object> temp : fieldMap) {
+            fieldList.add(temp);
+        }
+
+        miniMap.put("name", table_name);
+        miniMap.put("field", fieldList);
+        mainList.add(miniMap);
+        map.put("resource", mainList);
+        Log.d("MassAssign ",map.toString());
+        return map;
+    }
 
     public static Map<String, Object> createPatchBody (String table_name,  Map<String, Object> dataChange, String id) {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -83,11 +104,11 @@ public class DevlessBuilder {
     }
 
     public static Map<String, Object> signUpBuilder (String userName,
-                                              String email,
-                                              String password,
-                                              String phoneNumber,
-                                              String firstName,
-                                              String lastName)
+                                                     String email,
+                                                     String password,
+                                                     String phoneNumber,
+                                                     String firstName,
+                                                     String lastName)
     {
 
         Map<String, Object> signUp = new HashMap<>();
@@ -139,11 +160,11 @@ public class DevlessBuilder {
         }
 
 
-       return bool;
+        return bool;
     }
 
     public static boolean checkGetSuccess(String response){
-       boolean bool = false;
+        boolean bool = false;
         try {
             JSONObject JO = new JSONObject(response);
             int statusCode = JO.getInt("status_code");
