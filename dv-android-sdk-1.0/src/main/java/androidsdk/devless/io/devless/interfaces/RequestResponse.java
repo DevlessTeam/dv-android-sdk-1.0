@@ -10,5 +10,5 @@ import androidsdk.devless.io.devless.messages.ResponsePayload;
 public interface RequestResponse {
     void onSuccess(ResponsePayload response);
     void userNotAuthenticated(ErrorMessage message);
-    void fullRequestResponse(ResponsePayload response);
+//    void fullRequestResponse(ResponsePayload response);
 }
