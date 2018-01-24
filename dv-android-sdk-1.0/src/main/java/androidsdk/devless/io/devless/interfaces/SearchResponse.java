@@ -10,4 +10,5 @@ import androidsdk.devless.io.devless.messages.ResponsePayload;
 public interface SearchResponse {
     void onSuccess(ResponsePayload response);
     void userNotAuthenticated(ErrorMessage errorMessage);
+    void fullSearchResponse(ResponsePayload responsePayload);
 }

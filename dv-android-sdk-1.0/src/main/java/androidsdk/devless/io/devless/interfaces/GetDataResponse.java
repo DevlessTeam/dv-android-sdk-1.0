@@ -11,4 +11,5 @@ public interface GetDataResponse {
     void onSuccess(ResponsePayload response);
     void onFailed(ErrorMessage errorMessage);
     void userNotAuthenticated(ErrorMessage message);
+    void fullRequestResponse (ResponsePayload response);
 }

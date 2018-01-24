@@ -8,4 +8,5 @@ import androidsdk.devless.io.devless.messages.ResponsePayload;
 
 public interface LogoutResponse {
     void onLogOutSuccess(ResponsePayload response);
+    void fullLogoutResponse(ResponsePayload response);
 }
