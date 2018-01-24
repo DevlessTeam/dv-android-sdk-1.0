@@ -22,7 +22,7 @@ Add the dependency to your build.gradle(Module: app)
 ```Java
   	dependencies {
 		...
-	        compile 'com.github.DevlessTeam:dv-android-sdk-1.0:1.0.1'
+		compile 'com.github.DevlessTeam:dv-android-sdk-1.0:1.0.5'
 	}
 ```
 
